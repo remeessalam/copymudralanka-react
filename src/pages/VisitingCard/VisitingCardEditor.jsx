@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import FilerobotImageEditor, {
   TABS,
   TOOLS,
@@ -11,6 +11,7 @@ const VisitingCardEditor = ({ image, onImageSave, handleButtonClick }) => {
     !image && handleButtonClick();
     if (image) {
       setIsImgEditorShown(true);
+      window.history.pushState(null, "", window.location.href);
     }
   };
 
@@ -24,6 +25,20 @@ const VisitingCardEditor = ({ image, onImageSave, handleButtonClick }) => {
     }
     closeImgEditor();
   };
+
+  useEffect(() => {
+    const handlePopState = (event) => {
+      if (isImgEditorShown) {
+        closeImgEditor();
+      }
+    };
+
+    window.addEventListener("popstate", handlePopState);
+
+    return () => {
+      window.removeEventListener("popstate", handlePopState);
+    };
+  }, [isImgEditorShown]);
 
   return (
     <div className="container-visitingcard">
