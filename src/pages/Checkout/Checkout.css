@@ -1,0 +1,48 @@
+/* Base Styles */
+.grid-container {
+  display: grid;
+  grid-template-columns: 60% auto;
+  gap: 2rem;
+}
+
+.grid1 {
+  padding-block: 5rem;
+}
+
+.grid2 {
+  padding-block: 5rem;
+  background-color: #efefef;
+}
+
+.empty-cart-container {
+  padding-block: 5rem;
+  min-height: 50vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.button-div {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+/* Responsive Media Query */
+@media (max-width: 1024px) {
+  .grid-container {
+    display: flex;
+    flex-direction: column-reverse;
+  }
+  .grid1,
+  .grid2 {
+    padding-top: 1rem;
+  }
+  .grid1 {
+    padding-bottom: 3rem;
+  }
+  .grid2 {
+    padding-bottom: 1rem;
+  }
+}
