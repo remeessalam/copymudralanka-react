@@ -101,7 +101,8 @@ const VisitingCardEditor = ({ image, onImageSave, handleButtonClick }) => {
                   },
                 ],
               }}
-              tabsIds={[TABS.ANNOTATE]}
+              // tabsIds={[TABS.ADJUST, TABS.ANNOTATE, TABS.WATERMARK]}
+              tabsIds={[TABS.ANNOTATE, TABS.ADJUST]}
               defaultTabId={TABS.ANNOTATE}
               defaultToolId={TOOLS.TEXT}
             />

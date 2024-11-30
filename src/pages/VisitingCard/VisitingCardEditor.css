@@ -55,16 +55,21 @@
 
 .FIE_tabs_toggle_btn,
 .FIE_tabs {
-  display: none !important;
+  /* display: none !important; */
 }
 
-.SfxIconButton-root{
+.SfxIconButton-root {
   width: fit-content !important;
 }
 
-.cgZjAJ{
+.cgZjAJ {
   height: 100% !important;
 }
-.FIE_topbar-save-button ,.FIE_topbar-close-button{
+.FIE_topbar-save-button,
+.FIE_topbar-close-button {
   background-color: #17354f !important;
+}
+
+.kvcOJF {
+  top: 392.529783px;
 }
