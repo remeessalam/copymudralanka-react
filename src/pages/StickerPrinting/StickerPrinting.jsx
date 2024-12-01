@@ -540,24 +540,31 @@ const StickerPrinting = () => {
                   Click To Remove Background
                 </button>
 
-                <VisitingCardEditor
+                {/* <VisitingCardEditor
                   image={imgUrl}
                   onImageSave={handleImageSave}
                   handleButtonClick={handleButtonClick}
-                />
+                /> */}
                 {/* <button className="secondary-btn w-auto  mt-3">
                   Edit Image
                 </button> */}
               </div>
             ) : (
               !imgUrl && (
-                <button
-                  style={{ marginTop: "20px" }}
-                  onClick={handleButtonClick}
-                >
-                  Edit Image Here
-                </button>
+                <Link to={"/editsticker"} style={{ textDecoration: "none" }}>
+                  <button className="secondary-btn w-auto mx-auto mt-3">
+                    Edit Sticker
+                  </button>
+                </Link>
               )
+              // !imgUrl && (
+              //   <button
+              //     style={{ marginTop: "20px" }}
+              //     onClick={handleButtonClick}
+              //   >
+              //     Edit Image Here
+              //   </button>
+              // )
             )}
             {data.isInCart ? (
               <div

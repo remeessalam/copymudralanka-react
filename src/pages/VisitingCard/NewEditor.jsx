@@ -5,12 +5,13 @@ import { SidePanel } from "polotno/side-panel";
 import { Workspace } from "polotno/canvas/workspace";
 
 import { createDemoApp } from "polotno/polotno-app";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 // import css styles from blueprint framework (used by polotno)
 // if you bundler doesn't support such import you can use css from CDN (see bellow)
 import "@blueprintjs/core/lib/css/blueprint.css";
 import { IoMdCloseCircle } from "react-icons/io";
+import { useEffect, useState } from "react";
 
 const { store } = createDemoApp({
   container: document.getElementById("root"),
@@ -22,8 +23,12 @@ const { store } = createDemoApp({
 
 const NewEditor = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  console.log(location.pathname, "asdflajksdfasdf");
   const handleCustomButtonClick = () => {
-    navigate("/visitingcard");
+    location.pathname === "/editvisiting-card"
+      ? navigate("/visitingcard")
+      : navigate("/sticker-printing");
   };
   return (
     <PolotnoContainer style={{ width: "100vw", height: "100vh" }}>

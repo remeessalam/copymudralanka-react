@@ -75,6 +75,7 @@ function App() {
             <Route path="/cart" element={<Cart />} />
             <Route path="/checkout" element={<Checkout />} />
             <Route path="/editvisiting-card" element={<NewEditor />} />
+            <Route path="/editsticker" element={<NewEditor />} />
 
             {/* Service details pages */}
             <Route
