@@ -69,3 +69,22 @@
 .FIE_topbar-close-button {
   background-color: #17354f !important;
 }
+
+/* 
+<button
+onClick={handleCustomButtonClick}
+style={{
+  position: "absolute",
+  top: "60px",
+  right: "1px",
+  padding: "10px 20px",
+  backgroundColor: "#007bff",
+  color: "#fff",
+  border: "none",
+  borderRadius: "5px",
+  cursor: "pointer",
+  zIndex: "100000",
+}}
+>
+back to page
+</button> */

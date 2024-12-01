@@ -1,7 +1,7 @@
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import SpinnerContextProvider from "./components/SpinnerContext";
 import ScrollToTopButton from "./components/ScrollToTopButton";
-import { lazy, Suspense, useEffect, useRef } from "react";
+import { createContext, lazy, Suspense, useEffect, useRef } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import AboutUs from "./pages/AboutUs";
@@ -18,6 +18,7 @@ import toast, { Toaster } from "react-hot-toast";
 import Cart from "./pages/Cart/Cart";
 import Checkout from "./pages/Checkout/Checkout";
 import { addUser } from "./apiCalls";
+import NewEditor from "./pages/VisitingCard/NewEditor";
 
 const Home = lazy(() => import("./pages/Home/Home"));
 
@@ -73,12 +74,19 @@ function App() {
             <Route path="/contact" element={<ContactUs />} />
             <Route path="/cart" element={<Cart />} />
             <Route path="/checkout" element={<Checkout />} />
+            <Route path="/editvisiting-card" element={<NewEditor />} />
 
             {/* Service details pages */}
-            <Route path="/sticker-printing/:productId?" element={<StickerPrinting />} />
+            <Route
+              path="/sticker-printing/:productId?"
+              element={<StickerPrinting />}
+            />
             <Route path="/pvcidcard/:productId?" element={<PvcIdCard />} />
             <Route path="/mobilecase/:productId?" element={<MobileCase />} />
-            <Route path="/visitingcard/:productId?" element={<VisitingCard />} />
+            <Route
+              path="/visitingcard/:productId?"
+              element={<VisitingCard />}
+            />
             <Route path="/billbook/:productId?" element={<BillBook />} />
           </Routes>
         </Router>

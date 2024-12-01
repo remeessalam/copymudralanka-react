@@ -16,6 +16,9 @@ import { addToCart, getCartItemById, updateCartItem } from "../../apiCalls";
 import VisitingCardEditor from "./VisitingCardEditor";
 import { convertBase64intoFile } from "../../utils/helper";
 import imageCompression from "browser-image-compression";
+import { IoMdCloseCircle } from "react-icons/io";
+import { FaTrashAlt } from "react-icons/fa";
+// import { useImageContext } from "../../components/imageContext";
 const quantityOptions = [
   {
     quantity: "100",
@@ -100,6 +103,7 @@ const VisitingCard = () => {
     }
   };
 
+  // console.log(image, "asdfasdfsdf");
   // on image change
   const onImgChange = (file) => {
     if (file.target.files && file.target.files[0]) {
@@ -124,7 +128,8 @@ const VisitingCard = () => {
         file: selectedFile,
       }));
       setImgUrl(URL.createObjectURL(selectedFile));
-
+      // addImage(selectedFile);
+      localStorage.setItem("selectedImage", URL.createObjectURL(selectedFile));
       // update cart item if already in cart
       if (data.isInCart) {
         formData.append("quantity", data.quantity);
@@ -406,8 +411,21 @@ const VisitingCard = () => {
                   display: "flex",
                   justifyContent: "center",
                   marginTop: "2rem",
+                  position: "relative",
                 }}
               >
+                <div
+                  style={{ position: "absolute", top: "0px", right: "0px" }}
+                  onClick={() => {
+                    setImgUrl("");
+                    setData((prev) => ({
+                      ...prev,
+                      file: "",
+                    }));
+                  }}
+                >
+                  <FaTrashAlt style={{ width: "22px", height: "22px" }} />
+                </div>
                 <img
                   src={imgUrl}
                   style={{ height: "15rem", objectFit: "cover" }}
@@ -417,12 +435,21 @@ const VisitingCard = () => {
             )}
 
             {/* <VisitingCardEditor image={imgUrl} /> */}
-
-            <VisitingCardEditor
+            {!imgUrl && (
+              <Link
+                to={"/editvisiting-card"}
+                style={{ textDecoration: "none" }}
+              >
+                <button className="secondary-btn w-auto mx-auto mt-3">
+                  Edit Visiting Card
+                </button>
+              </Link>
+            )}
+            {/* <VisitingCardEditor
               image={imgUrl}
               onImageSave={handleImageSave}
               handleButtonClick={handleButtonClick}
-            />
+            /> */}
 
             {data.isInCart ? (
               <div
