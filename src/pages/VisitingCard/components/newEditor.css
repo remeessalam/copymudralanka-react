@@ -1,0 +1,95 @@
+.neweditor-container {
+  width: 100vw;
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  background: white;
+  z-index: 10000;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  justify-content: space-between;
+  align-items: center;
+  padding: 3rem;
+}
+
+.neweditor-image {
+  height: 60vh;
+}
+
+.neweditor-download-button {
+  width: fit-content;
+  padding: 10px 20px;
+  background: #007bff;
+  border: none;
+  outline: none;
+  color: #fff;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.neweditor-buttons-container {
+  position: absolute;
+  top: 55px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9995;
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  width: auto;
+}
+
+.neweditor-remove-button {
+  cursor: pointer;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+}
+
+.neweditor-file-input {
+  display: none;
+}
+
+.neweditor-close-button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+@media (max-width: 1310px) {
+  .neweditor-buttons-container {
+    top: 54px;
+    left: 60%;
+  }
+}
+@media (max-width: 1080px) {
+  .neweditor-buttons-container {
+    top: 54px;
+    left: 60%;
+  }
+}
+@media (max-width: 910px) {
+  .neweditor-buttons-container {
+    top: 101px;
+    left: 70%;
+  }
+}
+
+@media (max-width: 910px) {
+  .neweditor-buttons-container {
+    top: 52px;
+    left: 36%;
+  }
+}
+@media (max-width: 500px) {
+  .neweditor-buttons-container {
+    top: 52px;
+    left: 46%;
+  }
+}
