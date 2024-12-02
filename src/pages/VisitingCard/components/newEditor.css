@@ -8,9 +8,10 @@
   display: flex;
   flex-direction: column;
   height: 100vh;
-  justify-content: space-between;
+  /* justify-content: space-between; */
   align-items: center;
-  padding: 3rem;
+  padding: 3rem 0rem;
+  gap: 3rem;
 }
 
 .neweditor-image {
