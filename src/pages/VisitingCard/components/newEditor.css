@@ -31,7 +31,7 @@
 
 .neweditor-buttons-container {
   position: absolute;
-  top: 55px;
+  bottom: 55px;
   left: 50%;
   transform: translateX(-50%);
   z-index: 9995;
@@ -65,32 +65,34 @@
 
 @media (max-width: 1310px) {
   .neweditor-buttons-container {
-    top: 54px;
+    bottom: 54px;
     left: 60%;
   }
 }
 @media (max-width: 1080px) {
   .neweditor-buttons-container {
-    top: 54px;
-    left: 60%;
+    bottom: 54px;
+    left: 70%;
   }
 }
 @media (max-width: 910px) {
   .neweditor-buttons-container {
-    top: 101px;
+    bottom: 101px;
     left: 70%;
   }
 }
 
-@media (max-width: 910px) {
+@media (max-width: 800px) {
   .neweditor-buttons-container {
-    top: 52px;
-    left: 36%;
+    bottom: 52px;
+    left: 46%;
   }
 }
 @media (max-width: 500px) {
   .neweditor-buttons-container {
-    top: 52px;
+    display: flex;
+    flex-direction: column;
+    bottom: 62px;
     left: 46%;
   }
 }
