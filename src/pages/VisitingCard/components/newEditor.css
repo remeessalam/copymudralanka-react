@@ -63,6 +63,15 @@
   cursor: pointer;
 }
 
+.neweditor-cover {
+  position: absolute;
+  bottom: 3px;
+  right: 8px;
+  width: 12rem;
+  height: 1rem;
+  background-color: #e8e8e8;
+}
+
 @media (max-width: 1310px) {
   .neweditor-buttons-container {
     bottom: 54px;
@@ -86,6 +95,10 @@
   .neweditor-buttons-container {
     bottom: 52px;
     left: 46%;
+  }
+  .neweditor-cover {
+    bottom: 57px;
+    right: 14px;
   }
 }
 @media (max-width: 500px) {

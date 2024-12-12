@@ -121,6 +121,7 @@ const NewEditor = () => {
             Close Editor
           </button>
         </div>
+        <div className="neweditor-cover" />
       </PolotnoContainer>
       {imageUrl && (
         <div className="neweditor-container">
