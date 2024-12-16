@@ -17,6 +17,7 @@ import { removeBackgrounds } from "../../apiCalls";
 import { saveAs } from "file-saver"; // Import the FileSaver.js library
 import { SpinnerContext } from "../../components/SpinnerContext";
 import "./components/newEditor.css";
+
 const { store } = createDemoApp({
   container: document.getElementById("root"),
   key: "QTbtE3xruoaFYCgHfrd5", // Replace with your valid key.
@@ -28,14 +29,13 @@ const NewEditor = () => {
   const location = useLocation();
   const [backgroundRemoved, setBackgroundRemoved] = useState(false);
   const [imageUrl, setImageUrl] = useState(null);
-  // const [loading, setLoading] = useState(false);
+  const { setLoading } = useContext(SpinnerContext);
 
   const handleCustomButtonClick = () => {
     location.pathname === "/editvisiting-card"
       ? navigate("/visitingcard")
       : navigate("/sticker-printing");
   };
-  const { setLoading } = useContext(SpinnerContext);
 
   const handleFileChange = async (event) => {
     const file = event.target.files[0];
@@ -54,18 +54,7 @@ const NewEditor = () => {
 
       if (result.data.status) {
         const processedImageUrl = result.data.processedImageUrl;
-
-        // Create an invisible download link.
         setImageUrl(processedImageUrl);
-        // const link = document.createElement("a");
-        // link.href = processedImageUrl;
-        // link.download = "processed-image.png"; // Set the file name for the downloaded image.
-
-        // Append the link to the document body, trigger the download, then remove the link.
-        // document.body.appendChild(link);
-        // link.click();
-        // document.body.removeChild(link);
-
         setBackgroundRemoved(true);
         toast.success("Background removed successfully and image downloaded");
       } else {
@@ -83,6 +72,42 @@ const NewEditor = () => {
 
     // Trigger file input programmatically.
     document.getElementById("fileInput").click();
+  };
+
+  // New: Import Template Functionality
+  const handleTemplateImport = (event) => {
+    const file = event.target.files[0];
+    if (!file) {
+      toast.error("No file selected");
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      try {
+        const templateJSON = JSON.parse(e.target.result);
+        store.loadJSON(templateJSON); // Load template into Polotno store
+        toast.success("Template imported successfully!");
+      } catch (error) {
+        console.error("Error loading template:", error);
+        toast.error("Invalid template file.");
+      }
+    };
+    reader.readAsText(file);
+  };
+
+  const triggerTemplateInput = () => {
+    document.getElementById("templateInput").click();
+  };
+
+  // New: Export Template Functionality
+  const handleTemplateExport = () => {
+    const templateJSON = store.toJSON(); // Get the current state as JSON
+    const blob = new Blob([JSON.stringify(templateJSON, null, 2)], {
+      type: "application/json",
+    });
+    saveAs(blob, "template.json"); // Use FileSaver.js to trigger download
+    toast.success("Template exported successfully!");
   };
 
   return (
@@ -119,6 +144,29 @@ const NewEditor = () => {
             onClick={handleCustomButtonClick}
           >
             Close Editor
+          </button>
+
+          <input
+            type="file"
+            id="templateInput"
+            accept="application/json"
+            className="neweditor-file-input"
+            onChange={handleTemplateImport}
+            style={{ display: "none" }}
+          />
+          <button
+            className="neweditor-download-button"
+            onClick={triggerTemplateInput}
+          >
+            Import Template
+          </button>
+
+          {/* New: Export Template Button */}
+          <button
+            className="neweditor-download-button"
+            onClick={handleTemplateExport}
+          >
+            Export Template
           </button>
         </div>
         <div className="neweditor-cover" />
