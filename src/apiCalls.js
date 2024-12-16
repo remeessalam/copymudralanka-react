@@ -1,8 +1,8 @@
 import axios from "axios";
 export const convertUrlIntoFile = () => {};
 
-const baseUrl = "http://localhost:8080";
-// "https://photoprinting-backend.vercel.app";
+// "http://localhost:8080";
+const baseUrl = "https://photoprinting-backend.vercel.app";
 
 export const apiInstance = axios.create({
   baseURL: baseUrl,
