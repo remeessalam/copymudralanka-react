@@ -1,9 +1,8 @@
 import axios from "axios";
 export const convertUrlIntoFile = () => {};
 
-const baseUrl =
-  //  "http://localhost:7070";
-  "https://photoprinting-backend.vercel.app";
+const baseUrl = "http://localhost:8080";
+// "https://photoprinting-backend.vercel.app";
 
 export const apiInstance = axios.create({
   baseURL: baseUrl,
@@ -48,6 +47,23 @@ export const removeBackgrounds = (data) => {
     headers: { "Content-Type": "multipart/form-data" },
   });
 };
+
+// get templates
+export const getTemplates = () => {
+  return apiInstance.get("/templates/get-templates");
+};
+
+// add a template
+export const addTemplate = (param) => {
+  return apiInstance.post("/templates/create", param, {
+    headers: { "Content-Type": "application/json" },
+  });
+};
+
+// delete all templates
+// export const deleteAllTemplates = () => {
+//   return apiInstance.delete("/templates");
+// };
 
 // const sendMail = async () => {
 //     console.log("API Called!!");

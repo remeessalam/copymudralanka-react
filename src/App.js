@@ -18,7 +18,7 @@ import toast, { Toaster } from "react-hot-toast";
 import Cart from "./pages/Cart/Cart";
 import Checkout from "./pages/Checkout/Checkout";
 import { addUser } from "./apiCalls";
-import NewEditor from "./pages/VisitingCard/NewEditor";
+import { NewEditor } from "./pages/VisitingCard/NewEditor";
 
 const Home = lazy(() => import("./pages/Home/Home"));
 
