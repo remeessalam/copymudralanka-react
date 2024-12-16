@@ -10,18 +10,12 @@ import { Toolbar } from "polotno/toolbar/toolbar";
 import { ZoomButtons } from "polotno/toolbar/zoom-buttons";
 import { SidePanel, DEFAULT_SECTIONS } from "polotno/side-panel";
 import { Workspace } from "polotno/canvas/workspace";
-
 import { useLocation, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import "@blueprintjs/core/lib/css/blueprint.css";
 import { saveAs } from "file-saver";
 import { SpinnerContext } from "../../components/SpinnerContext";
-import {
-  getTemplates,
-  addTemplate,
-  // deleteAllTemplates,
-  removeBackgrounds,
-} from "../../apiCalls";
+import { addTemplate, getTemplates, getTemplate } from "../../apiCalls";
 import "./components/newEditor.css";
 import { FaFileAlt } from 'react-icons/fa';
 
@@ -36,7 +30,7 @@ const customTemplatesSection = {
   name: "customTemplates",
   Tab: (props) => (
     <div {...props} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-      <FaFileAlt style={{ marginBottom: 8, fontSize: '36px' }} /> {/* Increased icon size */}
+      <FaFileAlt style={{ marginBottom: 8, fontSize: '30px', marginTop: 8 }} /> {/* Increased icon size */}
       <div>Templates</div>
     </div>
   ),
@@ -49,9 +43,10 @@ const customTemplatesSection = {
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: "repeat(auto-fill, minmax(250px, 2fr))",
-            gap: 16,
-            overflowY: "auto", // Adds vertical scrollbar
+            gridTemplateColumns: "repeat(2, 1fr)", // Two columns in the grid
+            gap: "16px", // Spacing between grid items
+            gridAutoRows: "minmax(250px, auto)", // Allow grid items to have different heights
+            overflowY: "auto", // Adds vertical scrollbar if content overflows
             flexGrow: 1, // Ensures the grid takes up available space
             paddingRight: "8px", // To avoid cutting off scrollbar
             maxHeight: "calc(100vh - 40px)", // Subtracting padding for the full height adjustment
@@ -59,45 +54,39 @@ const customTemplatesSection = {
         >
           {templates.map((template, index) => (
             <div
-              key={template._id || index}
+              key={template.id || index}
               style={{
                 border: "1px solid #ddd",
                 borderRadius: 4,
                 padding: 10,
                 cursor: "pointer",
                 display: "flex",
-                height: "300px",
                 flexDirection: "column",
                 alignItems: "center",
                 backgroundColor: "#f9f9f9",
                 boxSizing: "border-box",
+                height: "auto", // Remove fixed height to allow content to adjust dynamically
               }}
-              onClick={() => onTemplateClick(template.template)} // Load template on click
+              onClick={() => onTemplateClick(template)} // Load template on click
             >
-              {template.template.pages[0].children[0].src ? (
-                <img
-                  src={template.template.pages[0].children[0].src} // Assuming the template contains an image URL
-                  alt={template.name || `Template ${index + 1}`}
-                  style={{
-                    width: "100%",
-                    height: "100%",
-                    borderRadius: 4,
-                    objectFit: "contain", // Ensures image fits without distortion
-                    marginBottom: 8,
-                  }}
-                />
-              ) : (
-                <div
-                  style={{
-                    width: "100%",
-                    height: "200px", // Placeholder size for templates without images
-                    backgroundColor: "#e0e0e0",
-                    borderRadius: 4,
-                    marginBottom: 8,
-                  }}
-                />
-              )}
-              <div style={{ textAlign: "center", fontWeight: "bold" }}>
+              {/* Template Image Preview */}
+              <div
+                style={{
+                  width: "100%",
+                  height: "200px", // Fixed height for the image preview container
+                  backgroundColor: "#e0e0e0",
+                  borderRadius: 4,
+                  backgroundImage: template.base64Template
+                    ? `url(data:image/png;base64,${template.base64Template})` // Use base64 data for image preview
+                    : "",
+                  backgroundSize: "cover", // Ensures the image covers the entire container
+                  backgroundPosition: "center", // Centers the image
+                  objectFit: "cover", // Ensures the image fills the container without distortion
+                }}
+              >
+                {/* This will render the preview if base64Template is available */}
+              </div>
+              <div style={{ textAlign: "center", fontWeight: "bold", marginTop: 8 }}>
                 {template.name || `Template ${index + 1}`}
               </div>
             </div>
@@ -107,6 +96,8 @@ const customTemplatesSection = {
     );
   },
 };
+
+
 
 export const NewEditor = () => {
   const navigate = useNavigate();
@@ -119,7 +110,40 @@ export const NewEditor = () => {
     try {
       setLoading(true); // Set loading state
       const response = await getTemplates();
-      setTemplates(response.data.templates || []);
+      const templatesWithPreview = await Promise.all(response.data.templates.map(async (template) => {
+        // Fetch the template JSON for each template
+        const templateResponse = await getTemplate(template);
+        
+        // Create a FileReader to read the JSON blob
+        const reader = new FileReader();
+        const templateBlob = new Blob([templateResponse.data], { type: 'application/json' });
+
+        return new Promise((resolve) => {
+          reader.onload = async (e) => {
+            try {
+              // Parse the template and load it into Polotno store
+              const templateData = JSON.parse(e.target.result);
+
+              // Generate base64 preview image
+              store.loadJSON(templateData);
+              const maxWidth = 200;
+              const scale = maxWidth / store.width;
+              const base64Image = await store.toDataURL({ pixelRatio: scale });
+
+              // Save the base64 image to the template object
+              template.base64Template = base64Image.split('base64,')[1];
+
+              resolve(template);
+            } catch (parseError) {
+              console.error('Failed to parse template:', parseError);
+              resolve(template); // Resolve template even if there's an error
+            }
+          };
+          reader.readAsText(templateBlob);
+        });
+      }));
+
+      setTemplates(templatesWithPreview || []);
       setLoading(false); // Reset loading state
     } catch (err) {
       console.error("Error fetching templates:", err);
@@ -139,31 +163,6 @@ export const NewEditor = () => {
       : navigate("/sticker-printing");
   };
 
-  const handleTemplateImport = async (event) => {
-    const file = event.target.files[0];
-    if (!file) {
-      toast.error("No file selected");
-      return;
-    }
-
-    const reader = new FileReader();
-    reader.onload = async (e) => {
-      try {
-        const importedTemplate = JSON.parse(e.target.result);
-
-        // Use addTemplate API to save the imported template
-        await addTemplate({name: "name", template: importedTemplate});
-        
-        toast.success("Template imported successfully!");
-        fetchTemplates(); // Refresh the templates list after import
-      } catch (err) {
-        console.error("Error importing template:", err);
-        toast.error("Failed to import template.");
-      }
-    };
-    reader.readAsText(file);
-  };
-
   const handleTemplateExport = () => {
     const templateJSON = store.toJSON(); // Get the current state as JSON
     const blob = new Blob([JSON.stringify(templateJSON, null, 2)], {
@@ -173,8 +172,61 @@ export const NewEditor = () => {
     toast.success("Template exported successfully!");
   };
 
-  const handleTemplateClick = (template) => {
-    store.loadJSON(template); // Load the template into Polotno store
+  const handleTemplateImport = async (event) => {
+    const formData = new FormData();
+    const file = event.target.files[0]; // Get the selected file
+
+    if (!file) {
+      toast.error("No file selected");
+      return;
+    }
+
+    const name = "Template Name"; // You can dynamically change this name if needed
+    formData.append("file", file);
+    formData.append("name", name);
+
+    try {
+      const response = addTemplate(formData);
+
+      toast.success("Template uploaded successfully!");
+      fetchTemplates(); // Refresh the templates list
+    } catch (err) {
+      console.error("Error uploading template:", err);
+      toast.error("Failed to upload template.");
+    }
+  };
+
+  const handleTemplateClick = async (template) => {
+    try {
+      console.log("Clicked Template:", template);
+      console.log("Attempting to fetch template with FileID:", template.fileId);
+
+      const response = await getTemplate(template);
+
+      console.log(response)
+
+      // Create a FileReader to read the blob
+      const reader = new FileReader();
+
+      reader.onload = (e) => {
+        try {
+          // Parse the file content
+          const templateData = JSON.parse(e.target.result);
+
+          // Load into Polotno store
+          store.loadJSON(templateData);
+        } catch (parseError) {
+          console.error('Failed to parse template:', parseError);
+          toast.error("Invalid template format");
+        }
+      };
+
+      reader.readAsText(response.data);
+      // Rest of your existing logic for processing the template
+    } catch (error) {
+      console.error('Template fetch error:', error);
+      toast.error("Failed to load template");
+    }
   };
 
   return (
@@ -183,8 +235,8 @@ export const NewEditor = () => {
         <SidePanel
           store={store}
           sections={[
-            ...DEFAULT_SECTIONS.filter((section) => section.name !== "templates"),
             { ...customTemplatesSection, Panel: () => <customTemplatesSection.Panel templates={templates} onTemplateClick={handleTemplateClick} /> },
+            ...DEFAULT_SECTIONS.filter((section) => section.name !== "templates"),
           ]}
         />
       </SidePanelWrap>

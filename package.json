@@ -14,7 +14,9 @@
     "file-saver": "^2.0.5",
     "gsap": "^3.12.5",
     "indian-pincodes": "^1.1.0",
+    "path-browserify": "^1.0.1",
     "polotno": "^2.15.0",
+    "psd": "^3.4.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-filerobot-image-editor": "^4.9.0",
@@ -26,6 +28,7 @@
     "react-router-dom": "^6.28.0",
     "react-scripts": "5.0.1",
     "swiper": "^11.1.15",
+    "vm-browserify": "^1.1.2",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
@@ -51,5 +54,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "browserify-fs": "^1.0.0"
   }
 }
