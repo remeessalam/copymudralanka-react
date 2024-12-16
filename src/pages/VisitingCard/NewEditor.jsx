@@ -1,3 +1,4 @@
+
 import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import {
@@ -217,3 +218,6 @@ export const NewEditor = () => {
     </PolotnoContainer>
   );
 };
+
+
+export default NewEditor;
