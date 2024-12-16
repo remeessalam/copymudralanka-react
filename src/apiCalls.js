@@ -1,8 +1,9 @@
 import axios from "axios";
 export const convertUrlIntoFile = () => {};
 
-// "http://localhost:8080";
-const baseUrl = "https://photoprinting-backend.vercel.app";
+// ;
+const baseUrl =
+  "http://localhost:8080"; /* "https://photoprinting-backend.vercel.app" */
 
 export const apiInstance = axios.create({
   baseURL: baseUrl,
@@ -54,10 +55,21 @@ export const getTemplates = () => {
 };
 
 // add a template
-export const addTemplate = (param) => {
-  return apiInstance.post("/templates/create", param, {
-    headers: { "Content-Type": "application/json" },
+export const addTemplate = (formData) => {
+  return apiInstance.post("/templates/create", formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
   });
+};
+
+export const getTemplate = (template) => {
+  return apiInstance.get(
+    `/templates/find/${template.fileId}`,
+    {
+      responseType: "blob",
+    }
+  );
 };
 
 // delete all templates
