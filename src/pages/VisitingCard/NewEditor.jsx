@@ -26,6 +26,8 @@ const { store } = createDemoApp({
   showCredit: true,
 });
 
+store.clear();
+
 const customTemplatesSection = {
   name: "customTemplates",
   Tab: (props) => (
@@ -105,52 +107,45 @@ export const NewEditor = () => {
   const { setLoading } = useContext(SpinnerContext);
   const [templates, setTemplates] = useState([]);
 
-  // Fetch templates on component mount or when button is clicked
   const fetchTemplates = async () => {
     try {
       setLoading(true); // Set loading state
       const response = await getTemplates();
-      const templatesWithPreview = await Promise.all(response.data.templates.map(async (template) => {
-        // Fetch the template JSON for each template
-        const templateResponse = await getTemplate(template);
-        
-        // Create a FileReader to read the JSON blob
-        const reader = new FileReader();
-        const templateBlob = new Blob([templateResponse.data], { type: 'application/json' });
-
-        return new Promise((resolve) => {
-          reader.onload = async (e) => {
-            try {
-              // Parse the template and load it into Polotno store
-              const templateData = JSON.parse(e.target.result);
-
-              // Generate base64 preview image
-              store.loadJSON(templateData);
-              const maxWidth = 200;
-              const scale = maxWidth / store.width;
-              const base64Image = await store.toDataURL({ pixelRatio: scale });
-
-              // Save the base64 image to the template object
-              template.base64Template = base64Image.split('base64,')[1];
-
-              resolve(template);
-            } catch (parseError) {
-              console.error('Failed to parse template:', parseError);
-              resolve(template); // Resolve template even if there's an error
-            }
-          };
-          reader.readAsText(templateBlob);
-        });
-      }));
-
-      setTemplates(templatesWithPreview || []);
+  
+      // Process templates without generating previews
+      const templatesWithData = await Promise.all(
+        response.data.templates.map(async (template) => {
+          const templateResponse = await getTemplate(template);
+          const reader = new FileReader();
+          const templateBlob = new Blob([templateResponse.data], { type: "application/json" });
+  
+          return new Promise((resolve) => {
+            reader.onload = (e) => {
+              try {
+                // Parse and assign template JSON
+                const templateData = JSON.parse(e.target.result);
+                template.jsonData = templateData; // Add parsed JSON to the template object
+                resolve(template);
+              } catch (parseError) {
+                console.error("Failed to parse template:", parseError);
+                resolve(template); // Still resolve if there's an error
+              }
+            };
+            reader.readAsText(templateBlob);
+          });
+        })
+      );
+  
+      // Update state with templates
+      setTemplates(templatesWithData || []);
       setLoading(false); // Reset loading state
     } catch (err) {
       console.error("Error fetching templates:", err);
-      setLoading(false); // Reset loading state
+      setLoading(false);
       toast.error("Failed to load templates.");
     }
   };
+  
 
   useEffect(() => {
     // Fetch templates on initial render
