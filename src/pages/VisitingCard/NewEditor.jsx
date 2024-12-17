@@ -77,8 +77,8 @@ const customTemplatesSection = {
                   height: "200px", // Fixed height for the image preview container
                   backgroundColor: "#e0e0e0",
                   borderRadius: 4,
-                  backgroundImage: template.base64Template
-                    ? `url(data:image/png;base64,${template.base64Template})` // Use base64 data for image preview
+                  backgroundImage: template.base64Image
+                    ? `url(data:image/png;base64,${template.base64Image})` // Use base64 data for image preview
                     : "",
                   backgroundSize: "cover", // Ensures the image covers the entire container
                   backgroundPosition: "center", // Centers the image
@@ -123,7 +123,7 @@ export const NewEditor = () => {
               try {
                 // Parse and assign template JSON
                 const templateData = JSON.parse(e.target.result);
-                template.jsonData = templateData; // Add parsed JSON to the template object
+                template.jsonData = templateData; // Add parsed JSON to the template objec
                 resolve(template);
               } catch (parseError) {
                 console.error("Failed to parse template:", parseError);
@@ -137,6 +137,7 @@ export const NewEditor = () => {
   
       // Update state with templates
       setTemplates(templatesWithData || []);
+      console.log(templatesWithData)
       setLoading(false); // Reset loading state
     } catch (err) {
       console.error("Error fetching templates:", err);
@@ -169,26 +170,46 @@ export const NewEditor = () => {
   const handleTemplateImport = async (event) => {
     const formData = new FormData();
     const file = event.target.files[0]; // Get the selected file
-
+  
     if (!file) {
       toast.error("No file selected");
       return;
     }
-
-    const name = "Template Name"; // You can dynamically change this name if needed
-    formData.append("file", file);
-    formData.append("name", name);
-
-    try {
-      const response = addTemplate(formData);
-
-      toast.success("Template uploaded successfully!");
-      fetchTemplates(); // Refresh the templates list
-    } catch (err) {
-      console.error("Error uploading template:", err);
-      toast.error("Failed to upload template.");
-    }
-  };
+  
+    const reader = new FileReader();
+  
+    reader.onload = async (e) => {
+      try {
+        // Step 1: Parse the JSON file content
+        const templateData = JSON.parse(e.target.result);
+  
+        // Step 2: Load the JSON into Polotno canvas
+        store.loadJSON(templateData);
+  
+        // Step 3: Generate a base64 image preview
+        const maxWidth = 200;
+        const scale = maxWidth / store.width;
+        const base64Image = await store.toDataURL({ pixelRatio: scale });
+  
+        // Step 4: Append file, name, and base64 image to FormData
+        const name = file.name.replace(".json", ""); // Extract name from file
+        formData.append("file", file);
+        formData.append("name", name);
+        formData.append("base64_image", base64Image.split(",")[1]); // Add base64 content
+  
+        // Step 5: Upload the template to the server
+        await addTemplate(formData);
+  
+        toast.success("Template uploaded successfully!");
+        fetchTemplates(); // Refresh the templates list
+      } catch (err) {
+        console.error("Error processing template file:", err);
+        toast.error("Failed to upload template.");
+      }
+    };
+  
+    reader.readAsText(file); // Read the file content
+  };  
 
   const handleTemplateClick = async (template) => {
     try {
