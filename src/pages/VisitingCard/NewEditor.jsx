@@ -26,7 +26,6 @@ const { store } = createDemoApp({
   showCredit: true,
 });
 
-store.clear();
 
 const customTemplatesSection = {
   name: "customTemplates",
