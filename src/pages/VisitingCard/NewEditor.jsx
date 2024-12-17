@@ -1,4 +1,3 @@
-
 import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import {
@@ -19,6 +18,7 @@ import { SpinnerContext } from "../../components/SpinnerContext";
 import { addTemplate, getTemplates, getTemplate } from "../../apiCalls";
 import "./components/newEditor.css";
 import { FaFileAlt } from 'react-icons/fa';
+import { removeBackgrounds } from "../../apiCalls";
 
 // Initialize the Polotno app
 const { store } = createDemoApp({
@@ -106,19 +106,21 @@ export const NewEditor = () => {
   const location = useLocation();
   const { setLoading } = useContext(SpinnerContext);
   const [templates, setTemplates] = useState([]);
+  const [backgroundRemoved, setBackgroundRemoved] = useState(false);
+  const [imageUrl, setImageUrl] = useState(null);
 
   const fetchTemplates = async () => {
     try {
       setLoading(true); // Set loading state
       const response = await getTemplates();
-  
+
       // Process templates without generating previews
       const templatesWithData = await Promise.all(
         response.data.templates.map(async (template) => {
           const templateResponse = await getTemplate(template);
           const reader = new FileReader();
           const templateBlob = new Blob([templateResponse.data], { type: "application/json" });
-  
+
           return new Promise((resolve) => {
             reader.onload = (e) => {
               try {
@@ -135,7 +137,7 @@ export const NewEditor = () => {
           });
         })
       );
-  
+
       // Update state with templates
       setTemplates(templatesWithData || []);
       console.log(templatesWithData)
@@ -146,7 +148,7 @@ export const NewEditor = () => {
       toast.error("Failed to load templates.");
     }
   };
-  
+
 
   useEffect(() => {
     // Fetch templates on initial render
@@ -171,36 +173,36 @@ export const NewEditor = () => {
   const handleTemplateImport = async (event) => {
     const formData = new FormData();
     const file = event.target.files[0]; // Get the selected file
-  
+
     if (!file) {
       toast.error("No file selected");
       return;
     }
-  
+
     const reader = new FileReader();
-  
+
     reader.onload = async (e) => {
       try {
         // Step 1: Parse the JSON file content
         const templateData = JSON.parse(e.target.result);
-  
+
         // Step 2: Load the JSON into Polotno canvas
         store.loadJSON(templateData);
-  
+
         // Step 3: Generate a base64 image preview
         const maxWidth = 200;
         const scale = maxWidth / store.width;
         const base64Image = await store.toDataURL({ pixelRatio: scale });
-  
+
         // Step 4: Append file, name, and base64 image to FormData
         const name = file.name.replace(".json", ""); // Extract name from file
         formData.append("file", file);
         formData.append("name", name);
         formData.append("base64_image", base64Image.split(",")[1]); // Add base64 content
-  
+
         // Step 5: Upload the template to the server
         await addTemplate(formData);
-  
+
         toast.success("Template uploaded successfully!");
         fetchTemplates(); // Refresh the templates list
       } catch (err) {
@@ -208,9 +210,9 @@ export const NewEditor = () => {
         toast.error("Failed to upload template.");
       }
     };
-  
+
     reader.readAsText(file); // Read the file content
-  };  
+  };
 
   const handleTemplateClick = async (template) => {
     try {
@@ -245,7 +247,56 @@ export const NewEditor = () => {
     }
   };
 
+  const handleFileChange = async (event) => {
+    const file = event.target.files[0];
+    if (!file) {
+      toast.error("No file selected");
+      return;
+    }
+
+    try {
+      setLoading(true);
+
+      const formData = new FormData();
+      formData.append("imageFile", file);
+
+      const result = await removeBackgrounds(formData); // Call your API to remove background.
+
+      if (result.data.status) {
+        const processedImageUrl = result.data.processedImageUrl;
+
+        // Create an invisible download link.
+        setImageUrl(processedImageUrl);
+        // const link = document.createElement("a");
+        // link.href = processedImageUrl;
+        // link.download = "processed-image.png"; // Set the file name for the downloaded image.
+
+        // Append the link to the document body, trigger the download, then remove the link.
+        // document.body.appendChild(link);
+        // link.click();
+        // document.body.removeChild(link);
+
+        setBackgroundRemoved(true);
+        toast.success("Background removed successfully and image downloaded");
+      } else {
+        toast.error(result.data.error || "Error removing background");
+      }
+    } catch (err) {
+      toast.error(err.message || "An error occurred while removing background");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const removeBackground = () => {
+    if (backgroundRemoved) return;
+
+    // Trigger file input programmatically.
+    document.getElementById("fileInput").click();
+  };
+
   return (
+    <>
     <PolotnoContainer style={{ width: "100vw", height: "100vh" }}>
       <SidePanelWrap>
         <SidePanel
@@ -262,7 +313,23 @@ export const NewEditor = () => {
         <ZoomButtons store={store} />
       </WorkspaceWrap>
       <div className="neweditor-buttons-container">
-        <button className="neweditor-remove-button" onClick={handleTemplateExport}>
+        {location.pathname !== "/editvisiting-card" && (
+          <button
+            className="neweditor-remove-button"
+            onClick={removeBackground}
+          >
+            Remove Background & Download
+          </button>
+        )}
+
+        <input
+          type="file"
+          id="fileInput"
+          accept="image/*"
+          className="neweditor-file-input"
+          onChange={handleFileChange}
+        />
+        {/* <button className="neweditor-remove-button" onClick={handleTemplateExport}>
           Export Templates
         </button>
         <button
@@ -277,14 +344,37 @@ export const NewEditor = () => {
           accept="application/json"
           onChange={handleTemplateImport}
           style={{ display: "none" }}
-        />
-        <button className="neweditor-close-button" onClick={handleCustomButtonClick}>
+        /> */}
+{/*         <button className="neweditor-close-button" onClick={handleCustomButtonClick}>
           Close Editor
-        </button>
+        </button> */}
       </div>
     </PolotnoContainer>
+    {imageUrl && (
+      <div className="neweditor-container">
+        <img
+          src={imageUrl}
+          alt="background-removed-image"
+          className="neweditor-image"
+        />
+        <button
+          className="neweditor-download-button"
+          onClick={() => {
+            fetch(imageUrl)
+              .then((response) => response.blob())
+              .then((blob) => {
+                saveAs(blob, "background-removed-image.png");
+                setImageUrl(null);
+              })
+              .catch((error) => {
+                console.error("Error downloading the image:", error);
+              });
+          }}
+        >
+          Download
+        </button>
+      </div>
+    )}
+    </>
   );
 };
-
-
-export default NewEditor;
