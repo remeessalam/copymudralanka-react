@@ -106,6 +106,8 @@ export const NewEditor = () => {
   const location = useLocation();
   const { setLoading } = useContext(SpinnerContext);
   const [templates, setTemplates] = useState([]);
+  const [backgroundRemoved, setBackgroundRemoved] = useState(false);
+  const [imageUrl, setImageUrl] = useState(null);
 
   const fetchTemplates = async () => {
     try {
