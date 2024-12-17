@@ -296,6 +296,7 @@ export const NewEditor = () => {
   };
 
   return (
+    <>
     <PolotnoContainer style={{ width: "100vw", height: "100vh" }}>
       <SidePanelWrap>
         <SidePanel
@@ -349,5 +350,31 @@ export const NewEditor = () => {
         </button>
       </div>
     </PolotnoContainer>
+    {imageUrl && (
+      <div className="neweditor-container">
+        <img
+          src={imageUrl}
+          alt="background-removed-image"
+          className="neweditor-image"
+        />
+        <button
+          className="neweditor-download-button"
+          onClick={() => {
+            fetch(imageUrl)
+              .then((response) => response.blob())
+              .then((blob) => {
+                saveAs(blob, "background-removed-image.png");
+                setImageUrl(null);
+              })
+              .catch((error) => {
+                console.error("Error downloading the image:", error);
+              });
+          }}
+        >
+          Download
+        </button>
+      </div>
+    )}
+    </>
   );
 };
