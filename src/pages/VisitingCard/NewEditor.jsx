@@ -329,7 +329,7 @@ export const NewEditor = () => {
           className="neweditor-file-input"
           onChange={handleFileChange}
         />
-        {/* <button className="neweditor-remove-button" onClick={handleTemplateExport}>
+        <button className="neweditor-remove-button" onClick={handleTemplateExport}>
           Export Templates
         </button>
         <button
@@ -344,10 +344,10 @@ export const NewEditor = () => {
           accept="application/json"
           onChange={handleTemplateImport}
           style={{ display: "none" }}
-        /> */}
-{/*         <button className="neweditor-close-button" onClick={handleCustomButtonClick}>
+        />         
+        <button className="neweditor-close-button" onClick={handleCustomButtonClick}>
           Close Editor
-        </button> */}
+        </button> 
       </div>
     </PolotnoContainer>
     {imageUrl && (
