@@ -2,8 +2,10 @@ import axios from "axios";
 export const convertUrlIntoFile = () => {};
 
 // ;
-const baseUrl ="https://photoprinting-backend.vercel.app";
-// const baseUrl = "http://localhost:8080"; 
+// const baseUrl ="https://photoprinting-backend.vercel.app";
+//NEW BACKEND LINK ADDED
+const baseUrl = "https://photoprinting-backend-five.vercel.app/";
+// const baseUrl = "http://localhost:8080";
 
 export const apiInstance = axios.create({
   baseURL: baseUrl,
@@ -64,12 +66,9 @@ export const addTemplate = (formData) => {
 };
 
 export const getTemplate = (template) => {
-  return apiInstance.get(
-    `/templates/find/${template.fileId}`,
-    {
-      responseType: "blob",
-    }
-  );
+  return apiInstance.get(`/templates/find/${template.fileId}`, {
+    responseType: "blob",
+  });
 };
 
 // delete all templates
