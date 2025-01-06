@@ -19,6 +19,8 @@ import { addTemplate, getTemplates, getTemplate } from "../../apiCalls";
 import "./components/newEditor.css";
 import { FaFileAlt } from 'react-icons/fa';
 import { removeBackgrounds } from "../../apiCalls";
+import { observer } from "mobx-react-lite";
+import { pxToUnitRounded } from "polotno/utils/unit";
 
 // Initialize the Polotno app
 const { store } = createDemoApp({
@@ -27,6 +29,11 @@ const { store } = createDemoApp({
   showCredit: true,
 });
 
+// Set the unit and DPI
+store.setUnit({
+  unit: "mm", // Use millimeters as the unit
+  dpi: 300,   // Set DPI to 300
+});
 
 const customTemplatesSection = {
   name: "customTemplates",
@@ -99,7 +106,70 @@ const customTemplatesSection = {
   },
 };
 
+// Custom UI component to display dimensions in millimeters
+const CustomUnitDisplay = observer(({ store }) => {
+  const [width, setWidth] = useState(0);
+  const [height, setHeight] = useState(0);
 
+  useEffect(() => {
+    const updateDimensions = () => {
+      const selectedElement = store.selectedElements[0];
+      if (selectedElement) {
+        // Convert width and height from pixels to millimeters
+        const widthInMm = pxToUnitRounded({
+          px: selectedElement.width,
+          unit: "mm",
+          precision: 2,
+          dpi: 300,
+        });
+        const heightInMm = pxToUnitRounded({
+          px: selectedElement.height,
+          unit: "mm",
+          precision: 2,
+          dpi: 300,
+        });
+        setWidth(widthInMm);
+        setHeight(heightInMm);
+      }
+    };
+
+    // Update dimensions when the store changes
+    updateDimensions();
+    store.on("change", updateDimensions);
+
+    return () => {
+      store.off("change", updateDimensions);
+    };
+  }, [store]);
+
+  return (
+    <div className="custom-unit-display">
+      <p>Width: {width} mm</p>
+      <p>Height: {height} mm</p>
+    </div>
+  );
+});
+
+// Function to export high-resolution image (300 DPI)
+const exportHighResImage = async () => {
+  try {
+    const scalingFactor = 300 / 72; // Scaling factor for 300 DPI
+    const base64Image = await store.toDataURL({ pixelRatio: scalingFactor });
+
+    // Trigger download
+    const link = document.createElement("a");
+    link.href = base64Image;
+    link.download = "high-res-image.png"; // Set the file name
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+
+    toast.success("High-resolution image exported successfully!");
+  } catch (error) {
+    console.error("Error exporting high-res image:", error);
+    toast.error("Failed to export high-resolution image.");
+  }
+};
 
 export const NewEditor = () => {
   const navigate = useNavigate();
@@ -148,7 +218,6 @@ export const NewEditor = () => {
       toast.error("Failed to load templates.");
     }
   };
-
 
   useEffect(() => {
     // Fetch templates on initial render
@@ -297,84 +366,95 @@ export const NewEditor = () => {
 
   return (
     <>
-    <PolotnoContainer style={{ width: "100vw", height: "100vh" }}>
-      <SidePanelWrap>
-        <SidePanel
-          store={store}
-          sections={[
-            { ...customTemplatesSection, Panel: () => <customTemplatesSection.Panel templates={templates} onTemplateClick={handleTemplateClick} /> },
-            ...DEFAULT_SECTIONS.filter((section) => section.name !== "templates"),
-          ]}
-        />
-      </SidePanelWrap>
-      <WorkspaceWrap>
-        <Toolbar store={store} downloadButtonEnabled />
-        <Workspace store={store} />
-        <ZoomButtons store={store} />
-      </WorkspaceWrap>
-      <div className="neweditor-buttons-container">
-        {location.pathname !== "/editvisiting-card" && (
-          <button
-            className="neweditor-remove-button"
-            onClick={removeBackground}
-          >
-            Remove Background & Download
-          </button>
-        )}
+      <PolotnoContainer style={{ width: "100vw", height: "100vh" }}>
+        <SidePanelWrap>
+          <SidePanel
+            store={store}
+            sections={[
+              { ...customTemplatesSection, Panel: () => <customTemplatesSection.Panel templates={templates} onTemplateClick={handleTemplateClick} /> },
+              ...DEFAULT_SECTIONS.filter((section) => section.name !== "templates"),
+            ]}
+          />
+        </SidePanelWrap>
+        <WorkspaceWrap>
+          <Toolbar store={store} downloadButtonEnabled />
+          <Workspace store={store} />
+          <ZoomButtons store={store} />
+        </WorkspaceWrap>
 
-        <input
-          type="file"
-          id="fileInput"
-          accept="image/*"
-          className="neweditor-file-input"
-          onChange={handleFileChange}
-        />
-        <button className="neweditor-remove-button" onClick={handleTemplateExport}>
-          Export Templates
-        </button>
-        <button
-          className="neweditor-download-button"
-          onClick={() => document.getElementById("templateInput").click()}
-        >
-          Import Templates
-        </button>
-        <input
-          type="file"
-          id="templateInput"
-          accept="application/json"
-          onChange={handleTemplateImport}
-          style={{ display: "none" }}
-        />         
-        <button className="neweditor-close-button" onClick={handleCustomButtonClick}>
-          Close Editor
-        </button> 
-      </div>
-    </PolotnoContainer>
-    {imageUrl && (
-      <div className="neweditor-container">
-        <img
-          src={imageUrl}
-          alt="background-removed-image"
-          className="neweditor-image"
-        />
-        <button
-          className="neweditor-download-button"
-          onClick={() => {
-            fetch(imageUrl)
-              .then((response) => response.blob())
-              .then((blob) => {
-                saveAs(blob, "background-removed-image.png");
-                setImageUrl(null);
-              })
-              .catch((error) => {
-                console.error("Error downloading the image:", error);
-              });
-          }}
-        >
-          Download
-        </button>
-      </div>
-    )}
+        {/* Custom UI for displaying dimensions */}
+        <CustomUnitDisplay store={store} />
+
+        {/* Button to export high-resolution image */}
+        <div className="export-button-container">
+          <button className="export-button" onClick={exportHighResImage}>
+            Export High-Res Image (300 DPI)
+          </button>
+        </div>
+
+        <div className="neweditor-buttons-container">
+          {location.pathname !== "/editvisiting-card" && (
+            <button
+              className="neweditor-remove-button"
+              onClick={removeBackground}
+            >
+              Remove Background & Download
+            </button>
+          )}
+
+          <input
+            type="file"
+            id="fileInput"
+            accept="image/*"
+            className="neweditor-file-input"
+            onChange={handleFileChange}
+          />
+          <button className="neweditor-remove-button" onClick={handleTemplateExport}>
+            Export Templates
+          </button>
+          <button
+            className="neweditor-download-button"
+            onClick={() => document.getElementById("templateInput").click()}
+          >
+            Import Templates
+          </button>
+          <input
+            type="file"
+            id="templateInput"
+            accept="application/json"
+            onChange={handleTemplateImport}
+            style={{ display: "none" }}
+          />         
+          <button className="neweditor-close-button" onClick={handleCustomButtonClick}>
+            Close Editor
+          </button> 
+        </div>
+      </PolotnoContainer>
+      {imageUrl && (
+        <div className="neweditor-container">
+          <img
+            src={imageUrl}
+            alt="background-removed-image"
+            className="neweditor-image"
+          />
+          <button
+            className="neweditor-download-button"
+            onClick={() => {
+              fetch(imageUrl)
+                .then((response) => response.blob())
+                .then((blob) => {
+                  saveAs(blob, "background-removed-image.png");
+                  setImageUrl(null);
+                })
+                .catch((error) => {
+                  console.error("Error downloading the image:", error);
+                });
+            }}
+          >
+            Download
+          </button>
+        </div>
+      )}
     </>
   );
 };
