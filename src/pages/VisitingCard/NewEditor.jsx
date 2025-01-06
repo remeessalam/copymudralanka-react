@@ -143,9 +143,8 @@ const CustomUnitDisplay = observer(({ store }) => {
   }, [store]);
 
   return (
-    <div className="custom-unit-display">
-      <p>Width: {width} mm</p>
-      <p>Height: {height} mm</p>
+    <div>
+      
     </div>
   );
 });
@@ -386,11 +385,7 @@ export const NewEditor = () => {
         <CustomUnitDisplay store={store} />
 
         {/* Button to export high-resolution image */}
-        <div className="export-button-container">
-          <button className="export-button" onClick={exportHighResImage}>
-            Export High-Res Image (300 DPI)
-          </button>
-        </div>
+       
 
         <div className="neweditor-buttons-container">
           {location.pathname !== "/editvisiting-card" && (
@@ -428,6 +423,9 @@ export const NewEditor = () => {
           <button className="neweditor-close-button" onClick={handleCustomButtonClick}>
             Close Editor
           </button> 
+          <button className="neweditor-close-button" onClick={exportHighResImage}>
+            Export High-Res Image (300 DPI)
+          </button>
         </div>
       </PolotnoContainer>
       {imageUrl && (
