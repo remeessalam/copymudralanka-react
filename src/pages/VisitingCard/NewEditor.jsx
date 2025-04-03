@@ -17,7 +17,7 @@ import { saveAs } from "file-saver";
 import { SpinnerContext } from "../../components/SpinnerContext";
 import { addTemplate, getTemplates, getTemplate } from "../../apiCalls";
 import "./components/newEditor.css";
-import { FaFileAlt } from 'react-icons/fa';
+import { FaFileAlt } from "react-icons/fa";
 import { removeBackgrounds } from "../../apiCalls";
 import { observer } from "mobx-react-lite";
 import { pxToUnitRounded } from "polotno/utils/unit";
@@ -32,14 +32,18 @@ const { store } = createDemoApp({
 // Set the unit and DPI
 store.setUnit({
   unit: "mm", // Use millimeters as the unit
-  dpi: 300,   // Set DPI to 300
+  dpi: 300, // Set DPI to 300
 });
 
 const customTemplatesSection = {
   name: "customTemplates",
   Tab: (props) => (
-    <div {...props} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-      <FaFileAlt style={{ marginBottom: 8, fontSize: '30px', marginTop: 8 }} /> {/* Increased icon size */}
+    <div
+      {...props}
+      style={{ display: "flex", flexDirection: "column", alignItems: "center" }}
+    >
+      <FaFileAlt style={{ marginBottom: 8, fontSize: "30px", marginTop: 8 }} />{" "}
+      {/* Increased icon size */}
       <div>Templates</div>
     </div>
   ),
@@ -48,7 +52,14 @@ const customTemplatesSection = {
       return <div style={{ padding: 20 }}>No templates available.</div>;
     }
     return (
-      <div style={{ padding: 20, height: '100vh', display: 'flex', flexDirection: 'column' }}>
+      <div
+        style={{
+          padding: 20,
+          height: "100vh",
+          display: "flex",
+          flexDirection: "column",
+        }}
+      >
         <div
           style={{
             display: "grid",
@@ -95,7 +106,13 @@ const customTemplatesSection = {
               >
                 {/* This will render the preview if base64Template is available */}
               </div>
-              <div style={{ textAlign: "center", fontWeight: "bold", marginTop: 8 }}>
+              <div
+                style={{
+                  textAlign: "center",
+                  fontWeight: "bold",
+                  marginTop: 8,
+                }}
+              >
                 {template.name || `Template ${index + 1}`}
               </div>
             </div>
@@ -138,15 +155,11 @@ const CustomUnitDisplay = observer(({ store }) => {
     store.on("change", updateDimensions);
 
     return () => {
-      store.off("change", updateDimensions);
+      // store.off("change", updateDimensions);
     };
   }, [store]);
 
-  return (
-    <div>
-      
-    </div>
-  );
+  return <div></div>;
 });
 
 // Function to export high-resolution image (300 DPI)
@@ -188,7 +201,9 @@ export const NewEditor = () => {
         response.data.templates.map(async (template) => {
           const templateResponse = await getTemplate(template);
           const reader = new FileReader();
-          const templateBlob = new Blob([templateResponse.data], { type: "application/json" });
+          const templateBlob = new Blob([templateResponse.data], {
+            type: "application/json",
+          });
 
           return new Promise((resolve) => {
             reader.onload = (e) => {
@@ -209,7 +224,7 @@ export const NewEditor = () => {
 
       // Update state with templates
       setTemplates(templatesWithData || []);
-      console.log(templatesWithData)
+      console.log(templatesWithData);
       setLoading(false); // Reset loading state
     } catch (err) {
       console.error("Error fetching templates:", err);
@@ -289,7 +304,7 @@ export const NewEditor = () => {
 
       const response = await getTemplate(template);
 
-      console.log(response)
+      console.log(response);
 
       // Create a FileReader to read the blob
       const reader = new FileReader();
@@ -302,7 +317,7 @@ export const NewEditor = () => {
           // Load into Polotno store
           store.loadJSON(templateData);
         } catch (parseError) {
-          console.error('Failed to parse template:', parseError);
+          console.error("Failed to parse template:", parseError);
           toast.error("Invalid template format");
         }
       };
@@ -310,7 +325,7 @@ export const NewEditor = () => {
       reader.readAsText(response.data);
       // Rest of your existing logic for processing the template
     } catch (error) {
-      console.error('Template fetch error:', error);
+      console.error("Template fetch error:", error);
       toast.error("Failed to load template");
     }
   };
@@ -370,8 +385,18 @@ export const NewEditor = () => {
           <SidePanel
             store={store}
             sections={[
-              { ...customTemplatesSection, Panel: () => <customTemplatesSection.Panel templates={templates} onTemplateClick={handleTemplateClick} /> },
-              ...DEFAULT_SECTIONS.filter((section) => section.name !== "templates"),
+              {
+                ...customTemplatesSection,
+                Panel: () => (
+                  <customTemplatesSection.Panel
+                    templates={templates}
+                    onTemplateClick={handleTemplateClick}
+                  />
+                ),
+              },
+              ...DEFAULT_SECTIONS.filter(
+                (section) => section.name !== "templates"
+              ),
             ]}
           />
         </SidePanelWrap>
@@ -385,7 +410,6 @@ export const NewEditor = () => {
         <CustomUnitDisplay store={store} />
 
         {/* Button to export high-resolution image */}
-       
 
         <div className="neweditor-buttons-container">
           {location.pathname !== "/editvisiting-card" && (
@@ -404,7 +428,10 @@ export const NewEditor = () => {
             className="neweditor-file-input"
             onChange={handleFileChange}
           />
-          <button className="neweditor-remove-button" onClick={handleTemplateExport}>
+          <button
+            className="neweditor-remove-button"
+            onClick={handleTemplateExport}
+          >
             Export Templates
           </button>
           <button
@@ -419,11 +446,17 @@ export const NewEditor = () => {
             accept="application/json"
             onChange={handleTemplateImport}
             style={{ display: "none" }}
-          />         
-          <button className="neweditor-close-button" onClick={handleCustomButtonClick}>
+          />
+          <button
+            className="neweditor-close-button"
+            onClick={handleCustomButtonClick}
+          >
             Close Editor
-          </button> 
-          <button className="neweditor-close-button" onClick={exportHighResImage}>
+          </button>
+          <button
+            className="neweditor-close-button"
+            onClick={exportHighResImage}
+          >
             Export High-Res Image (300 DPI)
           </button>
         </div>
