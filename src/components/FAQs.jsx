@@ -33,7 +33,9 @@ const FAQs = () => {
                 {faqs.map((item, i) => (
                   <div class="accrodion active">
                     <div
-                      onClick={() => setOpenedItem(i)}
+                      onClick={() =>
+                        setOpenedItem((prev) => (i === prev ? "" : i))
+                      }
                       class="accrodion-title text-white"
                     >
                       <h4>{item.question}</h4>

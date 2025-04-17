@@ -527,7 +527,7 @@ const VisitingCard = () => {
           </div>
         </div>
         <br />
-        <div class="section-threeContainer">
+        {/* <div class="section-threeContainer">
           <h3>Related products</h3>
           <div class="relatedproduct-container">
             {relatedProducts.map((obj) => (
@@ -538,7 +538,7 @@ const VisitingCard = () => {
               </div>
             ))}
           </div>
-        </div>
+        </div> */}
       </div>
       <Footer />
     </div>

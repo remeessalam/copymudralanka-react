@@ -24,7 +24,7 @@ const Header = () => {
     <header className="site-header header-one">
       <div className="top-bar d-none d-lg-flex">
         <div className="container">
-          <div className="social-block d-none d-xl-flex">
+          {/* <div className="social-block d-none d-xl-flex">
             <a
               className="d-flex justify-content-center align-items-center"
               href={socialMediaLinks.whatsapp}
@@ -43,7 +43,7 @@ const Header = () => {
             >
               <FaInstagram size={18} />
             </a>
-          </div>
+          </div> */}
           <div className="logo-block">
             <Link to="/">
               <img
@@ -53,7 +53,7 @@ const Header = () => {
               />
             </Link>
           </div>
-          <div className="d-md-flex d-none right-block">
+          {/* <div className="d-md-flex d-none right-block">
             <a
               className="flex items-center"
               href="mailto:mudralankashop@gmail.com"
@@ -68,7 +68,7 @@ const Header = () => {
               />
               +917799372747
             </a>
-          </div>
+          </div> */}
         </div>
       </div>
       <nav className="navbar navbar-expand-lg navbar-light header-navigation stricky">

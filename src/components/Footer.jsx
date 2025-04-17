@@ -80,13 +80,22 @@ const Footer = () => {
                     customer satisfaction.
                   </p>
                   <div className="social-block d-flex">
-                    <a className="d-flex justify-content-center align-items-center" href={socialMediaLinks.whatsapp}>
+                    <a
+                      className="d-flex justify-content-center align-items-center"
+                      href={socialMediaLinks.whatsapp}
+                    >
                       <FaWhatsapp size={20} />
                     </a>
-                    <a className="d-flex justify-content-center align-items-center" href={socialMediaLinks.youtube}>
+                    <a
+                      className="d-flex justify-content-center align-items-center"
+                      href={socialMediaLinks.youtube}
+                    >
                       <FaYoutube size={20} />
                     </a>
-                    <a className="d-flex justify-content-center align-items-center" href={socialMediaLinks.instagram}>
+                    <a
+                      className="d-flex justify-content-center align-items-center"
+                      href={socialMediaLinks.instagram}
+                    >
                       <FaInstagram size={20} />
                     </a>
                   </div>
@@ -99,7 +108,7 @@ const Footer = () => {
       <div className="bottom-footer text-center">
         <div className="container">
           <div className="inner-container">
-            <p>&copy; 2024 Mudralanka. All rights reserved. </p>
+            <p>&copy; 2025 Mudralanka. All rights reserved. </p>
           </div>
         </div>
       </div>

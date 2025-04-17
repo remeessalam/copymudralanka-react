@@ -45,8 +45,13 @@ const Testimonials = () => {
               <SwiperSlide key={testimonial.name}>
                 <div className="item">
                   <div className="testimonial-one__single">
-                    <div className="testimonial-one__image">
-                      <img src={testimonial.image} alt={testimonial.name} />
+                    <div
+                      className="testimonial-one__imagename"
+                      // style={{ background: "red" }}
+                    >
+                      {testimonial.name.split(" ")[0]?.charAt(0) || ""}{" "}
+                      {testimonial.name.split(" ")[1]?.charAt(0) || ""}
+                      {/* <img src={testimonial.image} alt={testimonial.name} /> */}
                     </div>
                     <p className="testimonial-one__text">{testimonial.text}</p>
                     <h4 className="testimonial-one__name">

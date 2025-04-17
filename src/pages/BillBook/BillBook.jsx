@@ -511,7 +511,7 @@ const BillBook = () => {
           </div>
         </div>
         <br />
-        <div class="section-threeContainer">
+        {/* <div class="section-threeContainer">
           <h3>Related products</h3>
           <div class="relatedproduct-container">
             {relatedProducts.map((obj) => (
@@ -521,48 +521,8 @@ const BillBook = () => {
                 <p>{obj.text}</p>
               </div>
             ))}
-            {/* <div class="relatedproducd-one">
-              <img
-                src="/images/service-stickerPrinting/related-productone.png"
-                alt="related product"
-              />
-              <h4>Sheet Stickers</h4>
-              <p>24 starting at ₹160.00</p>
-            </div>
-            <div class="relatedproducd-one">
-              <img
-                src="/images/service-stickerPrinting/related-productone.png"
-                alt="related product"
-              />
-              <h4>Sheet Stickers</h4>
-              <p>24 starting at ₹160.00</p>
-            </div>
-            <div class="relatedproducd-one">
-              <img
-                src="/images/service-stickerPrinting/related-productone.png"
-                alt="related product"
-              />
-              <h4>Sheet Stickers</h4>
-              <p>24 starting at ₹160.00</p>
-            </div>
-            <div class="relatedproducd-one">
-              <img
-                src="/images/service-stickerPrinting/related-productone.png"
-                alt="related product"
-              />
-              <h4>Sheet Stickers</h4>
-              <p>24 starting at ₹160.00</p>
-            </div>
-            <div class="relatedproducd-one">
-              <img
-                src="/images/service-stickerPrinting/related-productone.png"
-                alt="related product"
-              />
-              <h4>Sheet Stickers</h4>
-              <p>24 starting at ₹160.00</p>
-            </div> */}
           </div>
-        </div>
+        </div> */}
       </div>
       <Footer />
     </div>

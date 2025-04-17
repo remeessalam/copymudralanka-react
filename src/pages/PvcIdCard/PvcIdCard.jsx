@@ -111,10 +111,9 @@ const PvcIdCard = () => {
         formData.append("amount", data.price);
         formData.append("imageFile", selectedFile);
         updateCartItemData();
-      }else{
+      } else {
         toast.success("Image selected");
       }
-
     }
 
     // Reset file input value for consecutive uploads
@@ -311,14 +310,17 @@ const PvcIdCard = () => {
                 >
                   {data.quantity}
                 </button>
-                <div className={`dropdown-menu ${dropdownOpen ? "show" : ""}`} aria-labelledby="dropdownMenu2">
+                <div
+                  className={`dropdown-menu ${dropdownOpen ? "show" : ""}`}
+                  aria-labelledby="dropdownMenu2"
+                >
                   {quantities.map((item) => (
                     <button
                       className="dropdown-item"
                       type="button"
                       value={item.quantity}
                       key={item.quantity}
-                      onClick={() =>handleQuantityChange(item)}
+                      onClick={() => handleQuantityChange(item)}
                     >
                       {item.quantity}
                     </button>
@@ -451,7 +453,7 @@ const PvcIdCard = () => {
           </div>
         </div>
         <br />
-        <div className="section-threeContainer">
+        {/* <div className="section-threeContainer">
           <h3>Related products</h3>
           <div className="relatedproduct-container">
             {relatedProducts.map((obj) => (
@@ -461,48 +463,8 @@ const PvcIdCard = () => {
                 <p>{obj.text}</p>
               </div>
             ))}
-            {/* <div className="relatedproducd-one">
-              <img
-                src="/images/service-stickerPrinting/related-productone.png"
-                alt="related product"
-              />
-              <h4>Sheet Stickers</h4>
-              <p>24 starting at ₹160.00</p>
-            </div>
-            <div className="relatedproducd-one">
-              <img
-                src="/images/service-stickerPrinting/related-productone.png"
-                alt="related product"
-              />
-              <h4>Sheet Stickers</h4>
-              <p>24 starting at ₹160.00</p>
-            </div>
-            <div className="relatedproducd-one">
-              <img
-                src="/images/service-stickerPrinting/related-productone.png"
-                alt="related product"
-              />
-              <h4>Sheet Stickers</h4>
-              <p>24 starting at ₹160.00</p>
-            </div>
-            <div className="relatedproducd-one">
-              <img
-                src="/images/service-stickerPrinting/related-productone.png"
-                alt="related product"
-              />
-              <h4>Sheet Stickers</h4>
-              <p>24 starting at ₹160.00</p>
-            </div>
-            <div className="relatedproducd-one">
-              <img
-                src="/images/service-stickerPrinting/related-productone.png"
-                alt="related product"
-              />
-              <h4>Sheet Stickers</h4>
-              <p>24 starting at ₹160.00</p>
-            </div> */}
           </div>
-        </div>
+        </div> */}
       </div>
       <Footer />
     </div>
@@ -510,3 +472,46 @@ const PvcIdCard = () => {
 };
 
 export default PvcIdCard;
+
+{
+  /* <div className="relatedproducd-one">
+  <img
+    src="/images/service-stickerPrinting/related-productone.png"
+    alt="related product"
+  />
+  <h4>Sheet Stickers</h4>
+  <p>24 starting at ₹160.00</p>
+</div>
+<div className="relatedproducd-one">
+  <img
+    src="/images/service-stickerPrinting/related-productone.png"
+    alt="related product"
+  />
+  <h4>Sheet Stickers</h4>
+  <p>24 starting at ₹160.00</p>
+</div>
+<div className="relatedproducd-one">
+  <img
+    src="/images/service-stickerPrinting/related-productone.png"
+    alt="related product"
+  />
+  <h4>Sheet Stickers</h4>
+  <p>24 starting at ₹160.00</p>
+</div>
+<div className="relatedproducd-one">
+  <img
+    src="/images/service-stickerPrinting/related-productone.png"
+    alt="related product"
+  />
+  <h4>Sheet Stickers</h4>
+  <p>24 starting at ₹160.00</p>
+</div>
+<div className="relatedproducd-one">
+  <img
+    src="/images/service-stickerPrinting/related-productone.png"
+    alt="related product"
+  />
+  <h4>Sheet Stickers</h4>
+  <p>24 starting at ₹160.00</p>
+</div> */
+}

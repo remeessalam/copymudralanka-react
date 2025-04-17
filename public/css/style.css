@@ -2872,6 +2872,21 @@ hr.style-one {
   margin-left: auto;
   margin-right: auto;
 }
+.testimonial-one__imagename {
+  max-width: 10rem;
+  width: fit !important;
+  border-radius: 50%;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: #35c5af;
+  height: 10rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2rem;
+  font-weight: 600;
+  color: white;
+}
 
 .testimonial-one__carousel .owl-nav {
   display: none;
@@ -3081,7 +3096,7 @@ hr.style-one {
 }
 
 .service-two__title a {
-  color: #17354f;
+  /* color: #17354f; */
   transition: all 0.4s ease;
 }
 
@@ -4035,4 +4050,20 @@ hr.style-one {
 
 .sidebar__recent-post__title a:hover {
   color: #17354f;
+}
+
+.banner-service-title {
+  color: black;
+  font-size: 18px;
+  margin-top: 20px;
+  border: 1px solid transparent;
+  box-sizing: border-box;
+}
+
+.banner-service-title:hover {
+  border: none !important;
+  border-bottom: none !important;
+  outline: none !important;
+  text-decoration: none !important;
+  box-shadow: none !important;
 }

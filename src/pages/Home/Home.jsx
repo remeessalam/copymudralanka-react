@@ -38,13 +38,17 @@ const Home = () => {
               </div>
             </div>
           </div>
-          <div id='order-now' className="mt-5 pt-1">
+          <div id="order-now" className="mt-5 pt-1">
             <p className="block-title__tag-line text-center mt-5">
               “ORDER ONLINE NOW”
             </p>
             <div className="row-5-col">
               {services.map((service) => (
-                <Link to={service.path} key={service.title} className="col-5-col">
+                <div
+                  // to={service.path}
+                  key={service.title}
+                  className="col-5-col"
+                >
                   <div className="service-two__single hvr-float-shadow content-margin-30">
                     <img
                       src={service.image}
@@ -52,14 +56,28 @@ const Home = () => {
                       style={{
                         aspectRatio: "1 / 1",
                         borderRadius: "1rem",
-                        objectPosition:"top"
+                        objectPosition: "top",
                       }}
                     />
-                    <h3 className="service-two__title">
-                      <Link to={service.path}>{service.title}</Link>
-                    </h3>
+                    <p
+                      className="banner-service-title"
+                      style={{
+                        border: "1px solid transparent",
+                      }}
+                    >
+                      {/* <Link to={service.path}> */}
+                      {service.title}
+                      {/* </Link> */}
+                    </p>
+                    <Link
+                      to={service.path}
+                      style={{ marginTop: "10px" }}
+                      className="service-four__link"
+                    >
+                      shop Now
+                    </Link>
                   </div>
-                </Link>
+                </div>
               ))}
             </div>
           </div>

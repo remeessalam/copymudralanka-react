@@ -102,7 +102,7 @@ const MobileCase = () => {
         formData.append("brand", data.brand);
         formData.append("imageFile", selectedFile);
         updateCartItemData();
-      }else{
+      } else {
         toast.success("Image selected");
       }
     }
@@ -460,7 +460,7 @@ const MobileCase = () => {
           </div>
         </div>
         <br />
-        <div className="section-threeContainer">
+        {/* <div className="section-threeContainer">
           <h3>Related products</h3>
           <div className="relatedproduct-container">
             {relatedProducts.map((obj) => (
@@ -470,48 +470,9 @@ const MobileCase = () => {
                 <p>{obj.text}</p>
               </div>
             ))}
-            {/* <div className="relatedproducd-one">
-              <img
-                src="/images/service-stickerPrinting/related-productone.png"
-                alt="related product"
-              />
-              <h4>Sheet Stickers</h4>
-              <p>24 starting at ₹160.00</p>
-            </div>
-            <div className="relatedproducd-one">
-              <img
-                src="/images/service-stickerPrinting/related-productone.png"
-                alt="related product"
-              />
-              <h4>Sheet Stickers</h4>
-              <p>24 starting at ₹160.00</p>
-            </div>
-            <div className="relatedproducd-one">
-              <img
-                src="/images/service-stickerPrinting/related-productone.png"
-                alt="related product"
-              />
-              <h4>Sheet Stickers</h4>
-              <p>24 starting at ₹160.00</p>
-            </div>
-            <div className="relatedproducd-one">
-              <img
-                src="/images/service-stickerPrinting/related-productone.png"
-                alt="related product"
-              />
-              <h4>Sheet Stickers</h4>
-              <p>24 starting at ₹160.00</p>
-            </div>
-            <div className="relatedproducd-one">
-              <img
-                src="/images/service-stickerPrinting/related-productone.png"
-                alt="related product"
-              />
-              <h4>Sheet Stickers</h4>
-              <p>24 starting at ₹160.00</p>
-            </div> */}
+            
           </div>
-        </div>
+        </div> */}
       </div>
       <Footer />
     </div>

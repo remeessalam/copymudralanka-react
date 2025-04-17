@@ -2,7 +2,7 @@ html {
   scroll-behavior: smooth;
 }
 
-*{
+* {
   outline: none;
 }
 
@@ -31,7 +31,7 @@ html {
   opacity: 1;
 }
 
-.secondary-btn{
+.secondary-btn {
   background-color: #17354f !important;
   color: #fff;
   padding: 10px 20px;
@@ -44,7 +44,7 @@ html {
   text-align: center;
 }
 
-.secondary-btn:hover{
+.secondary-btn:hover {
   background-color: #fff !important;
   color: #17354f;
 }
@@ -112,6 +112,18 @@ html {
 }
 
 /* header drawer styles */
-.EZDrawer__container{
+.EZDrawer__container {
   z-index: 9999 !important;
+}
+
+.aboutsectionsplitedimage {
+  max-height: 28rem;
+  width: 100%;
+}
+
+@media screen and (max-width: 768px) {
+  .aboutsectionsplitedimage {
+    max-height: 19rem;
+    object-fit: cover;
+  }
 }

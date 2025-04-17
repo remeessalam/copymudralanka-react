@@ -27,10 +27,21 @@ const AboutUs = () => {
         <div class="container">
           <div class="row">
             <div class="col-xl-3 col-lg-6 col-sm-6 content-margin-30">
-              <img src="/images/resources/about-2-1.jpg" alt="Pic" />
+              <img
+                src="/images/resources/about-2-1.jpg"
+                alt="Pic"
+                className="aboutsectionsplitedimage"
+                // style={{ maxHeight: "28rem", width: "100%" }}
+              />
             </div>
             <div class="col-xl-3 col-lg-6 col-sm-6 content-margin-30">
-              <img src="/images/resources/about-2-2.jpg" alt="Pic" />
+              <img
+                src="/images/resources/about-2-2.jpg"
+                alt="Pic"
+                className="aboutsectionsplitedimage"
+
+                // style={{ maxHeight: "28rem", width: "100%" }}
+              />
             </div>
             <div class="col-lg-6 content-margin-30">
               <img src="/images/resources/about-2-3.jpg" alt="Pic" />
@@ -58,31 +69,32 @@ const AboutUs = () => {
           <div class="row">
             <div class="col-lg-3 col-md-6 col-sm-12">
               <div class="fun-fact-one__single content-margin-50">
-                <h3 class="fun-fact-one__title counter">8705</h3>
+                <h3 class="fun-fact-one__title counter">150</h3>
                 <p class="fun-fact-one__text">Projects Completed</p>
               </div>
             </div>
             <div class="col-lg-3 col-md-6 col-sm-12">
               <div class="fun-fact-one__single content-margin-50">
-                <h3 class="fun-fact-one__title counter">6740</h3>
+                <h3 class="fun-fact-one__title counter">420</h3>
                 <p class="fun-fact-one__text">Items Printed</p>
               </div>
             </div>
             <div class="col-lg-3 col-md-6 col-sm-12">
               <div class="fun-fact-one__single content-margin-50">
-                <h3 class="fun-fact-one__title counter">2300</h3>
-                <p class="fun-fact-one__text">Product Designed</p>
+                <h3 class="fun-fact-one__title counter">95</h3>
+                <p class="fun-fact-one__text">Products Designed</p>
               </div>
             </div>
             <div class="col-lg-3 col-md-6 col-sm-12">
               <div class="fun-fact-one__single content-margin-50">
-                <h3 class="fun-fact-one__title counter">9770</h3>
+                <h3 class="fun-fact-one__title counter">310</h3>
                 <p class="fun-fact-one__text">Happy Clients</p>
               </div>
             </div>
           </div>
         </div>
       </section>
+
       <FAQs />
       <LogosSlider />
       <Footer />

@@ -3,6 +3,7 @@ import Header from "../components/Header";
 import WhatWeCanDo from "../components/WhatWeCanDo";
 import Footer from "../components/Footer";
 import { Link } from "react-router-dom";
+import { services } from "../constant";
 
 const OurServices = () => {
   return (
@@ -27,7 +28,7 @@ const OurServices = () => {
             <div class="col-lg-4 col-md-6 col-sm-12">
               <div class="service-four__single content-margin-60">
                 <div class="service-four__icon">
-                  <img src="/images/icons/wall-sticker-1-1.jpg" alt="Pic" />
+                  <img src={services[0].image} alt="Pic" />
                 </div>
                 <h3 class="service-four__title">
                   <Link to="/sticker-printing">Sticker Printing</Link>
@@ -37,14 +38,14 @@ const OurServices = () => {
                   durable materials, perfect for personal or professional use.
                 </p>
                 <Link to="/sticker-printing" class="service-four__link">
-                  Read More
+                  View More
                 </Link>
               </div>
             </div>
             <div class="col-lg-4 col-md-6 col-sm-12">
               <div class="service-four__single content-margin-60">
                 <div class="service-four__icon">
-                  <img src="/images/icons/id-card-1-1.jpg" alt="Pic" />
+                  <img src={services[1].image} alt="Pic" />
                 </div>
                 <h3 class="service-four__title">
                   <Link to="/pvcidcard">PVC ID Card</Link>
@@ -55,14 +56,14 @@ const OurServices = () => {
                   businesses, schools, and events.
                 </p>
                 <Link to="/pvcidcard" class="service-four__link">
-                  Read More
+                  View More
                 </Link>
               </div>
             </div>
             <div class="col-lg-4 col-md-6 col-sm-12">
               <div class="service-four__single content-margin-60">
                 <div class="service-four__icon">
-                  <img src="/images/icons/mobile-case-1-1.jpg" alt="Pic" />
+                  <img src={services[2].image} alt="Pic" />
                 </div>
                 <h3 class="service-four__title">
                   <Link to="/mobilecase">Mobile Case Printing</Link>
@@ -73,14 +74,14 @@ const OurServices = () => {
                   style your device.
                 </p>
                 <Link to="/mobilecase" class="service-four__link">
-                  Read More
+                  View More
                 </Link>
               </div>
             </div>
             <div class="col-lg-4 col-md-6 col-sm-12">
               <div class="service-four__single content-margin-60">
                 <div class="service-four__icon">
-                  <img src="/images/icons/visiting-card-1-1.jpg" alt="Pic" />
+                  <img src={services[3].image} alt="Pic" />
                 </div>
                 <h3 class="service-four__title">
                   <Link to="/visitingcard">Visiting Card</Link>
@@ -91,15 +92,16 @@ const OurServices = () => {
                   any business setting.
                 </p>
                 <Link to="/visitingcard" class="service-four__link">
-                  Read More
+                  View More
                 </Link>
               </div>
             </div>
             <div class="col-lg-4 col-md-6 col-sm-12">
               <div class="service-four__single content-margin-60">
                 <div class="service-four__icon">
-                  <img src="/images/icons/accounting-book-1-1.jpg" alt="Pic" />
+                  <img src={services[4].image} alt="Pic" />
                 </div>
+                k
                 <h3 class="service-four__title">
                   <Link to="/billbook">Billbook</Link>
                 </h3>
@@ -109,7 +111,7 @@ const OurServices = () => {
                   invoicing and record-keeping.
                 </p>
                 <Link to="/billbook" class="service-four__link">
-                  Read More
+                  View More
                 </Link>
               </div>
             </div>
