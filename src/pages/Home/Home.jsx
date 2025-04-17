@@ -74,7 +74,7 @@ const Home = () => {
                       style={{ marginTop: "10px" }}
                       className="service-four__link"
                     >
-                      shop Now
+                      Shop Now
                     </Link>
                   </div>
                 </div>
