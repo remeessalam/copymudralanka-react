@@ -13,7 +13,7 @@ const Footer = () => {
               <div className="content-block">
                 <Link to="#">
                   <img
-                    src="/images/resources/logo-1-1.png"
+                    src="/images/resources/logo-1-3.png"
                     className="logo"
                     alt="logo"
                   />

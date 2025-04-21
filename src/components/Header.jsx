@@ -47,7 +47,7 @@ const Header = () => {
           <div className="logo-block">
             <Link to="/">
               <img
-                src="/images/resources/logo-1-1.png"
+                src="/images/resources/logo-1-3.png"
                 className="logo"
                 alt="logo"
               />
@@ -89,9 +89,9 @@ const Header = () => {
             </Link>
             <Link to="/">
               <img
-                src="/images/resources/logo-1-1.png"
+                src="/images/resources/logo-1-3.png"
                 className="mr-3 mr-md-0"
-                style={{ width: "4rem" }}
+                style={{ width: "6rem" }}
                 alt="logo"
               />
             </Link>

@@ -7,11 +7,13 @@ html {
 }
 
 .color-primary {
-  color: #35c5af;
+  /* color: #35c5af; */
+  color: #ff0000;
 }
 
 .fill-primary {
-  fill: #35c5af;
+  fill: #ff0000;
+  /* fill: #35c5af; */
 }
 
 /* Smooth toggle animation */
@@ -71,7 +73,7 @@ html {
   margin: 20px auto;
   position: relative;
   background: currentColor;
-  color: #35c5af;
+  color: #ff0000;
   box-sizing: border-box;
   animation: animloader 0.3s 0.3s linear infinite alternate;
 }
