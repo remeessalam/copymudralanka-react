@@ -190,7 +190,7 @@ export const NewEditor = () => {
   const [templates, setTemplates] = useState([]);
   const [backgroundRemoved, setBackgroundRemoved] = useState(false);
   const [imageUrl, setImageUrl] = useState(null);
-
+  const [openEditorOption, setOpenEditorOption] = useState(false);
   const fetchTemplates = async () => {
     try {
       setLoading(true); // Set loading state
@@ -410,56 +410,69 @@ export const NewEditor = () => {
         <CustomUnitDisplay store={store} />
 
         {/* Button to export high-resolution image */}
+        <div
+          className="pop-over-button"
+          onClick={() => setOpenEditorOption(!openEditorOption)}
+        >
+          Editor Options
+        </div>
+        {!openEditorOption && (
+          <div className="neweditor-buttons-container">
+            {location.pathname !== "/editvisiting-card" && (
+              <button
+                className="neweditor-remove-button"
+                onClick={removeBackground}
+              >
+                Remove Background & Download
+              </button>
+            )}
 
-        <div className="neweditor-buttons-container">
-          {location.pathname !== "/editvisiting-card" && (
+            <input
+              type="file"
+              id="fileInput"
+              accept="image/*"
+              className="neweditor-file-input"
+              onChange={handleFileChange}
+            />
             <button
               className="neweditor-remove-button"
-              onClick={removeBackground}
+              onClick={handleTemplateExport}
             >
-              Remove Background & Download
+              Export Templates
             </button>
-          )}
-
-          <input
-            type="file"
-            id="fileInput"
-            accept="image/*"
-            className="neweditor-file-input"
-            onChange={handleFileChange}
-          />
-          <button
-            className="neweditor-remove-button"
-            onClick={handleTemplateExport}
-          >
-            Export Templates
-          </button>
-          <button
-            className="neweditor-download-button"
-            onClick={() => document.getElementById("templateInput").click()}
-          >
-            Import Templates
-          </button>
-          <input
-            type="file"
-            id="templateInput"
-            accept="application/json"
-            onChange={handleTemplateImport}
-            style={{ display: "none" }}
-          />
-          <button
-            className="neweditor-close-button"
-            onClick={handleCustomButtonClick}
-          >
-            Close Editor
-          </button>
-          <button
-            className="neweditor-close-button"
-            onClick={exportHighResImage}
-          >
-            Export High-Res Image (300 DPI)
-          </button>
-        </div>
+            <button
+              className="neweditor-download-button"
+              onClick={() => document.getElementById("templateInput").click()}
+            >
+              Import Templates
+            </button>
+            <input
+              type="file"
+              id="templateInput"
+              accept="application/json"
+              onChange={handleTemplateImport}
+              style={{ display: "none" }}
+            />
+            <button
+              className="neweditor-close-button"
+              onClick={handleCustomButtonClick}
+            >
+              Close Editor
+            </button>
+            <button
+              className="neweditor-close-button"
+              onClick={exportHighResImage}
+            >
+              Export High-Res Image (300 DPI)
+            </button>
+            <button
+              className="editor-option-close-button"
+              onClick={() => setOpenEditorOption(!openEditorOption)}
+            >
+              X
+            </button>
+          </div>
+        )}
       </PolotnoContainer>
       {imageUrl && (
         <div className="neweditor-container">

@@ -39,6 +39,24 @@
   justify-content: space-between;
   gap: 20px;
   width: auto;
+  background-color: rgba(0, 0, 0, 0.708);
+  padding: 1rem;
+  border-radius: 1rem;
+}
+
+.pop-over-button {
+  position: absolute;
+  /* transform: translate(-50%); */
+  background-color: #007bff;
+  color: white;
+  font-weight: 700;
+  border-radius: 1rem;
+  padding: 1rem;
+  z-index: 9995;
+  /* bottom: 55px; */
+  bottom: 7rem;
+  right: 2rem;
+  /* left: 50%; */
 }
 
 .neweditor-remove-button {
@@ -71,7 +89,17 @@
   height: 1rem;
   background-color: #e8e8e8;
 }
+.editor-option-close-button {
+  background-color: white;
+  border: none;
+  border-radius: 9999px;
+}
 
+@media (max-width: 1450px) {
+  .pop-over-button {
+    bottom: 0.2rem;
+  }
+}
 @media (max-width: 1310px) {
   .neweditor-buttons-container {
     bottom: 54px;
@@ -86,28 +114,39 @@
 }
 @media (max-width: 910px) {
   .neweditor-buttons-container {
-    bottom: 101px;
+    bottom: 11rem;
     left: 70%;
+  }
+  .pop-over-button {
+    bottom: 7rem;
   }
 }
 
 @media (max-width: 800px) {
   .neweditor-buttons-container {
-    bottom: 52px;
+    bottom: 8rem;
     left: 46%;
   }
   .neweditor-cover {
     bottom: 57px;
     right: 14px;
   }
+  .pop-over-button {
+    bottom: 4rem;
+    right: 8rem;
+  }
 }
 @media (max-width: 500px) {
   .neweditor-buttons-container {
     display: flex;
     flex-direction: column;
-    bottom: 68px;
-    left: 70%;
+    bottom: 9rem;
+    left: 60%;
     z-index: 2;
     width: 250px;
+  }
+  .pop-over-button {
+    bottom: 4.5rem;
+    right: 8rem;
   }
 }
