@@ -93,6 +93,8 @@
   background-color: white;
   border: none;
   border-radius: 9999px;
+  width: fit-content;
+  height: fit-content;
 }
 
 @media (max-width: 1450px) {
@@ -146,7 +148,7 @@
     width: 250px;
   }
   .pop-over-button {
-    bottom: 4.5rem;
+    bottom: 3.5rem;
     right: 8rem;
   }
 }
