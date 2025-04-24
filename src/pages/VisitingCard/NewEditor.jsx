@@ -416,7 +416,7 @@ export const NewEditor = () => {
         >
           Editor Options
         </div>
-        {!openEditorOption && (
+        {openEditorOption && (
           <div className="neweditor-buttons-container">
             {location.pathname !== "/editvisiting-card" && (
               <button
