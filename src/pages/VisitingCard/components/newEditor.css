@@ -154,8 +154,8 @@
     right: 8rem;
   }
   .cover-water-mark {
-    width: 10rem;
-    bottom: 4rem;
+    width: 11rem;
+    bottom: -1rem;
   }
 }
 @media (max-width: 500px) {
