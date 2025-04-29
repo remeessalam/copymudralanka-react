@@ -54,8 +54,21 @@
   padding: 1rem;
   z-index: 9995;
   /* bottom: 55px; */
-  bottom: 7rem;
-  right: 2rem;
+  bottom: 1rem;
+  right: 5rem;
+  /* left: 50%; */
+}
+.cover-water-mark {
+  position: absolute;
+  /* transform: translate(-50%); */
+  background-color: #e8e8e8;
+  color: white;
+  font-weight: 700;
+  padding: 1rem;
+  /* bottom: 55px; */
+  bottom: 0.1rem;
+  right: 0rem;
+  width: 11rem;
   /* left: 50%; */
 }
 
@@ -122,6 +135,9 @@
   .pop-over-button {
     bottom: 7rem;
   }
+  .cover-water-mark {
+    width: 10rem;
+  }
 }
 
 @media (max-width: 800px) {
@@ -136,6 +152,10 @@
   .pop-over-button {
     bottom: 4rem;
     right: 8rem;
+  }
+  .cover-water-mark {
+    width: 10rem;
+    bottom: 4rem;
   }
 }
 @media (max-width: 500px) {

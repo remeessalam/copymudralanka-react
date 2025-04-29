@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import axios from "axios";
 import {
   createDemoApp,
@@ -184,6 +184,8 @@ const exportHighResImage = async () => {
 };
 
 export const NewEditor = () => {
+  const modalRef = useRef(null);
+
   const navigate = useNavigate();
   const location = useLocation();
   const { setLoading } = useContext(SpinnerContext);
@@ -237,6 +239,22 @@ export const NewEditor = () => {
     // Fetch templates on initial render
     fetchTemplates();
   }, []);
+
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (modalRef.current && !modalRef.current.contains(event.target)) {
+        setOpenEditorOption(false);
+      }
+    }
+
+    if (openEditorOption) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [openEditorOption]);
 
   const handleCustomButtonClick = () => {
     location.pathname === "/editvisiting-card"
@@ -301,7 +319,7 @@ export const NewEditor = () => {
     try {
       console.log("Clicked Template:", template);
       console.log("Attempting to fetch template with FileID:", template.fileId);
-
+      setLoading(true);
       const response = await getTemplate(template);
 
       console.log(response);
@@ -327,8 +345,19 @@ export const NewEditor = () => {
     } catch (error) {
       console.error("Template fetch error:", error);
       toast.error("Failed to load template");
+    } finally {
+      setLoading(false);
+      toggleCollapse();
     }
   };
+  function toggleCollapse() {
+    const sidePanel = document.querySelector(
+      ".go2955394242.bp5-navbar.polotno-side-panel"
+    );
+    if (sidePanel) {
+      sidePanel.classList.add("collapsed");
+    }
+  }
 
   const handleFileChange = async (event) => {
     const file = event.target.files[0];
@@ -410,6 +439,7 @@ export const NewEditor = () => {
         <CustomUnitDisplay store={store} />
 
         {/* Button to export high-resolution image */}
+        <div className="cover-water-mark" />
         <div
           className="pop-over-button"
           onClick={() => setOpenEditorOption(!openEditorOption)}
@@ -417,7 +447,7 @@ export const NewEditor = () => {
           Editor Options
         </div>
         {openEditorOption && (
-          <div className="neweditor-buttons-container">
+          <div ref={modalRef} className="neweditor-buttons-container">
             {location.pathname !== "/editvisiting-card" && (
               <button
                 className="neweditor-remove-button"
