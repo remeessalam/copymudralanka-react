@@ -162,27 +162,6 @@ const CustomUnitDisplay = observer(({ store }) => {
   return <div></div>;
 });
 
-// Function to export high-resolution image (300 DPI)
-const exportHighResImage = async () => {
-  try {
-    const scalingFactor = 300 / 72; // Scaling factor for 300 DPI
-    const base64Image = await store.toDataURL({ pixelRatio: scalingFactor });
-
-    // Trigger download
-    const link = document.createElement("a");
-    link.href = base64Image;
-    link.download = "high-res-image.png"; // Set the file name
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-
-    toast.success("High-resolution image exported successfully!");
-  } catch (error) {
-    console.error("Error exporting high-res image:", error);
-    toast.error("Failed to export high-resolution image.");
-  }
-};
-
 export const NewEditor = () => {
   const modalRef = useRef(null);
 
@@ -413,7 +392,30 @@ export const NewEditor = () => {
     // Trigger file input programmatically.
     document.getElementById("fileInput").click();
   };
+  // Function to export high-resolution image (300 DPI)
+  const exportHighResImage = async () => {
+    try {
+      const scalingFactor = 300 / 72; // Scaling factor for 300 DPI
+      const base64Image = await store.toDataURL({ pixelRatio: scalingFactor });
+      console.log(base64Image, "asdflkasjdf");
+      // Trigger download
+      localStorage.setItem("selectedImage", base64Image);
+      localStorage.setItem("EditedImage", base64Image);
+      handleCustomButtonClick();
+      return;
+      const link = document.createElement("a");
+      link.href = base64Image;
+      link.download = "high-res-image.png"; // Set the file name
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
 
+      toast.success("High-resolution image exported successfully!");
+    } catch (error) {
+      console.error("Error exporting high-res image:", error);
+      toast.error("Failed to export high-resolution image.");
+    }
+  };
   return (
     <>
       <PolotnoContainer style={{ width: "100vw", height: "100vh" }}>
@@ -500,7 +502,8 @@ export const NewEditor = () => {
               className="neweditor-close-button"
               onClick={exportHighResImage}
             >
-              Export High-Res Image (300 DPI)
+              {/* Export High-Res Image (300 DPI) */}
+              Add Template To Cart
             </button>
             <button
               className="editor-option-close-button"

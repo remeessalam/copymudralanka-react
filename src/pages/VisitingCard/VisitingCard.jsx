@@ -80,6 +80,31 @@ const VisitingCard = () => {
   useEffect(() => {
     getProductById();
   }, []);
+  useEffect(() => {
+    const savedImage = localStorage.getItem("EditedImage");
+    if (savedImage) {
+      const file = base64ToFile(savedImage, "design.png");
+
+      setImgUrl(savedImage);
+      formData.append("imageFile", file);
+      setData((prev) => ({
+        ...prev,
+        file: file,
+      }));
+    }
+  }, []);
+
+  const base64ToFile = (base64String, filename) => {
+    const arr = base64String.split(",");
+    const mime = arr[0].match(/:(.*?);/)[1];
+    const bstr = atob(arr[1]);
+    let n = bstr.length;
+    const u8arr = new Uint8Array(n);
+    while (n--) {
+      u8arr[n] = bstr.charCodeAt(n);
+    }
+    return new File([u8arr], filename, { type: mime });
+  };
 
   // get product details if id is present
   const getProductById = async () => {
@@ -107,7 +132,9 @@ const VisitingCard = () => {
   // on image change
   const onImgChange = (file) => {
     if (file.target.files && file.target.files[0]) {
-      selectedFile = file.target.files[0];
+      const savedImage = localStorage.getItem("selectedImage");
+
+      selectedFile = savedImage ? savedImage : file.target.files[0];
 
       // Validate file type
       const validFileTypes = ["image/png", "image/jpeg", "image/jpg"];
@@ -139,6 +166,7 @@ const VisitingCard = () => {
       } else {
         toast.success("Image selected");
       }
+      console.log(data, "asdfasdfsdf");
     }
 
     // Reset file input value for consecutive uploads
@@ -167,7 +195,7 @@ const VisitingCard = () => {
       setLoading(true);
 
       const compressedFile = await compressImage(data.file);
-      formData.append("imageFile", compressedFile);
+      formData.append("imageFile", compressedFile || data.file);
       formData.append("quantity", data.quantity);
       formData.append("category", "VISITING_CARD");
       formData.append("userId", localStorage.getItem("userId") || "");
@@ -422,6 +450,8 @@ const VisitingCard = () => {
                       ...prev,
                       file: "",
                     }));
+                    localStorage.removeItem("selectedImage");
+                    localStorage.removeItem("EditedImage");
                   }}
                 >
                   <FaTrashAlt style={{ width: "22px", height: "22px" }} />
