@@ -350,12 +350,19 @@ export const NewEditor = () => {
       toggleCollapse();
     }
   };
+  // if (sidePanel) {
+  //   sidePanel.classList.add("collapsed");
+  // }
+  // const sidePanel = document.querySelector(
+  //   ".go2955394242.bp5-navbar.polotno-side-panel"
+  // );
   function toggleCollapse() {
-    const sidePanel = document.querySelector(
-      ".go2955394242.bp5-navbar.polotno-side-panel"
+    const panelContainer = document.querySelector(
+      ".go3960841851.bp5-navbar.polotno-panel-container"
     );
-    if (sidePanel) {
-      sidePanel.classList.add("collapsed");
+
+    if (window.innerWidth <= 768 && panelContainer) {
+      panelContainer.style.display = "none";
     }
   }
 
