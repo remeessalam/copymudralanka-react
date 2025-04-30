@@ -439,7 +439,8 @@ export const NewEditor = () => {
           />
         </SidePanelWrap>
         <WorkspaceWrap>
-          <Toolbar store={store} downloadButtonEnabled />
+          <Toolbar store={store} />
+          {/* downloadButtonEnabled */}
           <Workspace store={store} />
           <ZoomButtons store={store} />
         </WorkspaceWrap>
