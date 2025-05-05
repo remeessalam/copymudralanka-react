@@ -210,6 +210,13 @@ const VisitingCard = () => {
         setData((prev) => ({ ...prev, isInCart: true }));
         toast.success("Item added to cart");
         setCartItemId(res.data.cartItem._id);
+        localStorage.removeItem("selectedImage");
+        localStorage.removeItem("EditedImage");
+        setImgUrl("");
+        setData((prev) => ({
+          ...prev,
+          quantity: "",
+        }));
       } else {
         toast.error(res.data.error);
       }
