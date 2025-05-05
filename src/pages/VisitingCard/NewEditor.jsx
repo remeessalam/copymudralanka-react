@@ -343,6 +343,7 @@ export const NewEditor = () => {
 
     if (window.innerWidth <= 768 && panelContainer) {
       panelContainer.style.display = "none";
+      panelContainer.style.overflowY = "hidden";
     }
   }
 

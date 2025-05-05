@@ -170,5 +170,6 @@
   .pop-over-button {
     bottom: 3.5rem;
     right: 8rem;
+    z-index: 9;
   }
 }
