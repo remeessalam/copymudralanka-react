@@ -176,36 +176,37 @@ export const NewEditor = () => {
     try {
       setLoading(true); // Set loading state
       const response = await getTemplates();
-
+      console.log(response, "asdfasdfasdfs");
       // Process templates without generating previews
-      const templatesWithData = await Promise.all(
-        response.data.templates.map(async (template) => {
-          const templateResponse = await getTemplate(template);
-          const reader = new FileReader();
-          const templateBlob = new Blob([templateResponse.data], {
-            type: "application/json",
-          });
+      // const templatesWithData = await Promise.all(
+      //   response.data.templates.map(async (template) => {
+      //     const templateResponse = await getTemplate(template);
+      //     const reader = new FileReader();
+      //     const templateBlob = new Blob([templateResponse.data], {
+      //       type: "application/json",
+      //     });
 
-          return new Promise((resolve) => {
-            reader.onload = (e) => {
-              try {
-                // Parse and assign template JSON
-                const templateData = JSON.parse(e.target.result);
-                template.jsonData = templateData; // Add parsed JSON to the template objec
-                resolve(template);
-              } catch (parseError) {
-                console.error("Failed to parse template:", parseError);
-                resolve(template); // Still resolve if there's an error
-              }
-            };
-            reader.readAsText(templateBlob);
-          });
-        })
-      );
+      //     return new Promise((resolve) => {
+      //       reader.onload = (e) => {
+      //         try {
+      //           // Parse and assign template JSON
+      //           const templateData = JSON.parse(e.target.result);
+      //           template.jsonData = templateData; // Add parsed JSON to the template objec
+      //           resolve(template);
+      //         } catch (parseError) {
+      //           console.error("Failed to parse template:", parseError);
+      //           resolve(template); // Still resolve if there's an error
+      //         }
+      //       };
+      //       reader.readAsText(templateBlob);
+      //     });
+      //   })
+      // );
 
       // Update state with templates
-      setTemplates(templatesWithData || []);
-      console.log(templatesWithData);
+      // setTemplates(templatesWithData || []);
+      setTemplates(response.data.templates || []);
+      // console.log(templatesWithData);
       setLoading(false); // Reset loading state
     } catch (err) {
       console.error("Error fetching templates:", err);
@@ -403,14 +404,14 @@ export const NewEditor = () => {
       localStorage.setItem("EditedImage", base64Image);
       handleCustomButtonClick();
       return;
-      const link = document.createElement("a");
-      link.href = base64Image;
-      link.download = "high-res-image.png"; // Set the file name
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
+      // const link = document.createElement("a");
+      // link.href = base64Image;
+      // link.download = "high-res-image.png"; // Set the file name
+      // document.body.appendChild(link);
+      // link.click();
+      // document.body.removeChild(link);
 
-      toast.success("High-resolution image exported successfully!");
+      // toast.success("High-resolution image exported successfully!");
     } catch (error) {
       console.error("Error exporting high-res image:", error);
       toast.error("Failed to export high-resolution image.");
