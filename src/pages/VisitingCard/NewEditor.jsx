@@ -15,12 +15,18 @@ import toast from "react-hot-toast";
 import "@blueprintjs/core/lib/css/blueprint.css";
 import { saveAs } from "file-saver";
 import { SpinnerContext } from "../../components/SpinnerContext";
-import { addTemplate, getTemplates, getTemplate } from "../../apiCalls";
+import {
+  addTemplate,
+  getTemplates,
+  getTemplate,
+  addToCart,
+} from "../../apiCalls";
 import "./components/newEditor.css";
 import { FaFileAlt } from "react-icons/fa";
 import { removeBackgrounds } from "../../apiCalls";
 import { observer } from "mobx-react-lite";
 import { pxToUnitRounded } from "polotno/utils/unit";
+import imageCompression from "browser-image-compression";
 
 // Initialize the Polotno app
 const { store } = createDemoApp({
@@ -167,11 +173,14 @@ export const NewEditor = () => {
 
   const navigate = useNavigate();
   const location = useLocation();
-  const { setLoading } = useContext(SpinnerContext);
+  const { loading, setLoading } = useContext(SpinnerContext);
   const [templates, setTemplates] = useState([]);
   const [backgroundRemoved, setBackgroundRemoved] = useState(false);
   const [imageUrl, setImageUrl] = useState(null);
   const [openEditorOption, setOpenEditorOption] = useState(false);
+  const [templateImage, setTemplateImage] = useState(null);
+  const formData = new FormData();
+
   const fetchTemplates = async () => {
     try {
       setLoading(true); // Set loading state
@@ -395,15 +404,24 @@ export const NewEditor = () => {
     document.getElementById("fileInput").click();
   };
   // Function to export high-resolution image (300 DPI)
+  let templateimages;
   const exportHighResImage = async () => {
     try {
+      setLoading(true);
+
       const scalingFactor = 300 / 72; // Scaling factor for 300 DPI
       const base64Image = await store.toDataURL({ pixelRatio: scalingFactor });
+      setTemplateImage(base64Image);
+      templateimages = base64Image;
       console.log(base64Image, "asdflkasjdf");
       // Trigger download
-      localStorage.setItem("selectedImage", base64Image);
-      localStorage.setItem("EditedImage", base64Image);
-      handleCustomButtonClick();
+      // localStorage.setItem("selectedImage", base64Image);
+      if (templateimages) {
+        location.pathname === "/editvisiting-card"
+          ? addItemToCart()
+          : addItemToCartSticker();
+      }
+      // handleCustomButtonClick();
       return;
       // const link = document.createElement("a");
       // link.href = base64Image;
@@ -416,6 +434,150 @@ export const NewEditor = () => {
     } catch (error) {
       console.error("Error exporting high-res image:", error);
       toast.error("Failed to export high-resolution image.");
+      setLoading(false);
+    }
+  };
+
+  const compressImage = async (file) => {
+    const options = {
+      maxSizeMB: 1, // Maximum file size in MB
+      maxWidthOrHeight: 1920, // Resize to fit within this dimension
+      useWebWorker: true,
+    };
+    try {
+      const compressedFile = await imageCompression(file, options);
+      return compressedFile;
+    } catch (error) {
+      console.error("Image compression error:", error);
+    }
+  };
+
+  const base64ToFile = (base64String, filename) => {
+    const arr = base64String.split(",");
+    const mime = arr[0].match(/:(.*?);/)[1];
+    const bstr = atob(arr[1]);
+    let n = bstr.length;
+    const u8arr = new Uint8Array(n);
+    while (n--) {
+      u8arr[n] = bstr.charCodeAt(n);
+    }
+    return new File([u8arr], filename, { type: mime });
+  };
+
+  const addItemToCart = async () => {
+    !loading && setLoading(true);
+
+    const scalingFactor = 300 / 72; // Scaling factor for 300 DPI
+    const base64Image = await store.toDataURL({ pixelRatio: scalingFactor });
+    // localStorage.setItem("selectedImage", base64Image);
+    const quantity = localStorage.getItem("quantity");
+    const amount = localStorage.getItem("amount");
+
+    if (!quantity) {
+      toast("Please select a  quantity", { id: "quantity" });
+      return;
+    }
+    if (!base64Image) {
+      toast("Please select a design", { id: "image" });
+      return;
+    }
+    try {
+      // const savedImage = localStorage.getItem("selectedImage");
+      let file;
+      if (templateimages) {
+        file = base64ToFile(templateimages, "design.png");
+      }
+      console.log(file, base64Image, "asdfasdfasdfasdf");
+      const compressedFile = await compressImage(file);
+      formData.append("imageFile", compressedFile || file);
+      formData.append("quantity", quantity);
+      formData.append("category", "VISITING_CARD");
+      formData.append("userId", localStorage.getItem("userId") || "");
+      formData.append("amount", amount);
+
+      const res = await addToCart(formData);
+      console.log(res, "htiasdfikasdjf");
+      if (res.data.status === false && res.data.error.code === "413") {
+        return toast.error("The image file is too large.");
+      }
+      if (res.data.status) {
+        toast.success("Item added to cart");
+        localStorage.removeItem("selectedImage");
+        // localStorage.removeItem("EditedImage");
+        localStorage.removeItem("quantity");
+        localStorage.removeItem("amount");
+      } else {
+        toast.error(res.data.error);
+      }
+    } catch (err) {
+      toast.error(err.message);
+    } finally {
+      setLoading(false);
+      handleCustomButtonClick();
+    }
+  };
+
+  const addItemToCartSticker = async () => {
+    const size = localStorage.getItem("size");
+    const stikerquantity = localStorage.getItem("stikerquantity");
+    const stikerprice = localStorage.getItem("stikerprice");
+    console.log(size, stikerquantity, "consoelasdfsdfesf");
+    if (!size || !stikerquantity) {
+      toast("Please select a size and quantity", { id: "error" });
+      return;
+    }
+    // if (!imgUrl) {
+    //   toast("Please select a design", { id: "image" });
+    //   return;
+    // }
+    try {
+      setLoading(true);
+      formData.append("size", size);
+      // if (backgroundRemoved) {
+      //   formData.append("imageUrl", templateimages);
+      // } else {
+      let file;
+      if (templateimages) {
+        file = base64ToFile(templateimages, "design.png");
+      }
+      const compressedFile = await compressImage(file);
+
+      formData.append("imageFile", compressedFile || file);
+      // }
+      formData.append("quantity", stikerquantity);
+      formData.append("category", "STICKER_PRINTING");
+      formData.append("userId", localStorage.getItem("userId") || "");
+      formData.append("amount", stikerprice);
+      formData.append("isBackgroundRemoved", backgroundRemoved);
+
+      const res = await addToCart(formData);
+      console.log(res, "thalskdfjasdf");
+      if (res.data.status === false && res.data.error.code === "413") {
+        return !res.data.status
+          ? toast.error(res.data.error.message)
+          : toast.error(res.data.error);
+      }
+      if (res.data.status) {
+        // setData((prev) => ({
+        //   ...prev,
+        //   isInCart: true,
+        //   file: res.data.cartItem.imageFile,
+        // }));
+        toast.success("Item added to cart");
+        localStorage.removeItem("size");
+        localStorage.removeItem("stikerquantity");
+        localStorage.removeItem("stikerprice");
+        localStorage.removeItem("selectedImage");
+
+        // setCartItemId(res.data.cartItem._id);
+      } else {
+        toast.error(res.data.error);
+      }
+    } catch (err) {
+      toast.error(err.message);
+    } finally {
+      setLoading(false);
+      handleCustomButtonClick();
     }
   };
   return (
@@ -504,6 +666,7 @@ export const NewEditor = () => {
             <button
               className="neweditor-close-button"
               onClick={exportHighResImage}
+              // onClick={addItemToCart}
             >
               {/* Export High-Res Image (300 DPI) */}
               Add Template To Cart

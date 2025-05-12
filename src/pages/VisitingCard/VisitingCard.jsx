@@ -250,6 +250,8 @@ const VisitingCard = () => {
       quantity: item.quantity,
       price: item.price,
     }));
+    localStorage.setItem("quantity", item.quantity);
+    localStorage.setItem("amount", item.price);
     formData.append("quantity", item.quantity);
     formData.append("amount", item.price);
     if (data.isInCart && item.quantity !== data.quantity) {
@@ -258,17 +260,17 @@ const VisitingCard = () => {
   };
 
   // handle image save after edit
-  const handleImageSave = (newImageUrl) => {
-    const file = convertBase64intoFile(newImageUrl);
-    setData((prev) => ({ ...prev, file: file }));
-    setImgUrl(newImageUrl); // Update the imageUrl state
-    if (data.isInCart) {
-      formData.append("imageFile", file);
-      formData.append("quantity", data.quantity);
-      formData.append("amount", data.price);
-      updateCartItemData();
-    }
-  };
+  // const handleImageSave = (newImageUrl) => {
+  //   const file = convertBase64intoFile(newImageUrl);
+  //   setData((prev) => ({ ...prev, file: file }));
+  //   setImgUrl(newImageUrl); // Update the imageUrl state
+  //   if (data.isInCart) {
+  //     formData.append("imageFile", file);
+  //     formData.append("quantity", data.quantity);
+  //     formData.append("amount", data.price);
+  //     updateCartItemData();
+  //   }
+  // };
 
   const compressImage = async (file) => {
     const options = {
@@ -282,6 +284,16 @@ const VisitingCard = () => {
     } catch (error) {
       console.error("Image compression error:", error);
     }
+  };
+
+  const handleOpenEditor = () => {
+    const quantity = localStorage.getItem("quantity");
+    const amount = localStorage.getItem("amount");
+    if (!quantity || !amount) {
+      toast("Please select a  quantity", { id: "quantity" });
+      return;
+    }
+    navigate("/editvisiting-card");
   };
 
   return (
@@ -473,14 +485,15 @@ const VisitingCard = () => {
 
             {/* <VisitingCardEditor image={imgUrl} /> */}
             {!imgUrl && (
-              <Link
-                to={"/editvisiting-card"}
+              <div
+                onClick={handleOpenEditor}
+                // to={"/editvisiting-card"}
                 style={{ textDecoration: "none" }}
               >
                 <button className="secondary-btn w-auto mx-auto mt-3">
                   Edit Visiting Card
                 </button>
-              </Link>
+              </div>
             )}
             {/* <VisitingCardEditor
               image={imgUrl}

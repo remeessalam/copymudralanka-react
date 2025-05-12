@@ -236,6 +236,8 @@ const StickerPrinting = () => {
   const handleSizeChange = (item) => {
     setData((prev) => ({ ...prev, size: item }));
     setDropdownOpen(false);
+    localStorage.setItem("size", item);
+
     formData.append("size", item);
     formData.append("quantity", data.quantity);
     formData.append("amount", data.price);
@@ -251,6 +253,8 @@ const StickerPrinting = () => {
       quantity: item.quantity,
       price: item.price,
     }));
+    localStorage.setItem("stikerquantity", item.quantity);
+    localStorage.setItem("stikerprice", item.price);
     formData.append("size", data.size);
     formData.append("quantity", item.quantity);
     formData.append("amount", item.price);
@@ -314,6 +318,16 @@ const StickerPrinting = () => {
     } catch (error) {
       console.error("Image compression error:", error);
     }
+  };
+
+  const handleOpenEditor = () => {
+    const quantity = localStorage.getItem("stikerquantity");
+    const amount = localStorage.getItem("stikerprice");
+    const size = localStorage.getItem("size");
+    if (!quantity || !amount || !size) {
+      return toast("Please select a size and quantity", { id: "size" });
+    }
+    navigate("/editsticker");
   };
   return (
     <div className="page-wrapper">
@@ -551,11 +565,15 @@ const StickerPrinting = () => {
               </div>
             ) : (
               !imgUrl && (
-                <Link to={"/editsticker"} style={{ textDecoration: "none" }}>
+                <div
+                  onClick={handleOpenEditor}
+                  //  to={"/editsticker"}
+                  style={{ textDecoration: "none" }}
+                >
                   <button className="secondary-btn w-auto mx-auto mt-3">
                     Edit Sticker
                   </button>
-                </Link>
+                </div>
               )
               // !imgUrl && (
               //   <button
