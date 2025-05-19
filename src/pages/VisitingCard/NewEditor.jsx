@@ -91,7 +91,7 @@ const customTemplatesSection = {
                 alignItems: "center",
                 backgroundColor: "#f9f9f9",
                 boxSizing: "border-box",
-                height: "auto", // Remove fixed height to allow content to adjust dynamically
+                height: "fit-content", // Remove fixed height to allow content to adjust dynamically
               }}
               onClick={() => onTemplateClick(template)} // Load template on click
             >
@@ -181,11 +181,21 @@ export const NewEditor = () => {
   const [templateImage, setTemplateImage] = useState(null);
   const formData = new FormData();
 
+  const filterTemplates = (templates) => {
+    return templates.filter((template) => {
+      const nameStartsWith =
+        location.pathname === "/editvisiting-card" ? "template" : "sticker";
+      return template.name.startsWith(nameStartsWith);
+    });
+  };
+
   const fetchTemplates = async () => {
     try {
       setLoading(true); // Set loading state
       const response = await getTemplates();
       console.log(response, "asdfasdfasdfs");
+      const filteredTemplates = filterTemplates(response.data.templates || []);
+
       // Process templates without generating previews
       // const templatesWithData = await Promise.all(
       //   response.data.templates.map(async (template) => {
@@ -214,7 +224,7 @@ export const NewEditor = () => {
 
       // Update state with templates
       // setTemplates(templatesWithData || []);
-      setTemplates(response.data.templates || []);
+      setTemplates(filteredTemplates || []);
       // console.log(templatesWithData);
       setLoading(false); // Reset loading state
     } catch (err) {
