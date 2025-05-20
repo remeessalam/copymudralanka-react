@@ -23,7 +23,7 @@ export const headerLinks = [
     path: "/about",
   },
   {
-    title: "Our Services",
+    title: "All Categories",
     path: "/services",
   },
   {

@@ -11,13 +11,13 @@ const OurServices = () => {
       <Header />
       <div class="inner-banner thm-black-bg text-center">
         <div class="container">
-          <h2 class="inner-banner__title">Our Services</h2>
+          <h2 class="inner-banner__title">All Categories</h2>
           <ul class="thm-breadcrumb">
             <li class="thm-breadcrumb__item">
               <a href="#">Home</a>
             </li>
             <li class="thm-breadcrumb__item">
-              <span>Our Services</span>
+              <span>All Categories</span>
             </li>
           </ul>
         </div>

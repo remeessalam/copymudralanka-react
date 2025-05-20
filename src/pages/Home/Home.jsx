@@ -21,7 +21,7 @@ const Home = () => {
           <div className="row">
             <div className="col-lg-6">
               <div className="block-title mb-0">
-                <p className="block-title__tag-line ">Our Services</p>
+                <p className="block-title__tag-line ">All Categories</p>
                 <h2 className="block-title__title">
                   Mudralanka Printing and Copy Centre Best in Your Town
                 </h2>
