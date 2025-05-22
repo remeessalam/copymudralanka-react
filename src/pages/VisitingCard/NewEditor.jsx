@@ -239,7 +239,7 @@ export const NewEditor = () => {
   useEffect(() => {
     // Fetch templates on initial render
     // fetchTemplates();
-    handleTemplateClick(fileId);
+    location.pathname !== "/editor" && handleTemplateClick(fileId);
   }, []);
 
   useEffect(() => {

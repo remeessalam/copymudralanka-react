@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { SpinnerContext } from "./SpinnerContext";
 import { addToCart, getTemplates } from "../apiCalls";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import imageCompression from "browser-image-compression";
 
@@ -133,6 +133,10 @@ const DesingPage = () => {
           ? "Standard Visting Cards"
           : "Standard Sticker"}
       </h1>
+      <br />
+      <Link className="secondary-btn mt-4" to={"/editor"}>
+        Create new{" "}
+      </Link>
       <div className="designgrid mt-4">
         {templates.map((obj) => (
           <div key={obj.id} className="designcard">

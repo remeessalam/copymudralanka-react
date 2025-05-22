@@ -77,6 +77,7 @@ function App() {
             <Route path="/checkout" element={<Checkout />} />
             <Route path="/editvisiting-card/:fileId" element={<NewEditor />} />
             <Route path="/editsticker/:fileId" element={<NewEditor />} />
+            <Route path="/editor" element={<NewEditor />} />
             <Route path="/visiting-card-designs" element={<DesingPage />} />
             <Route path="/sticker-designs" element={<DesingPage />} />
 
