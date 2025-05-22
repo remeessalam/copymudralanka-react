@@ -107,7 +107,7 @@ html {
 }
 
 /* hamburger menu close button */
-.close-btn {
+.review-close-btn {
   background: transparent;
   border: none;
   outline: none;
@@ -127,5 +127,251 @@ html {
   .aboutsectionsplitedimage {
     max-height: 19rem;
     object-fit: cover;
+  }
+}
+/**  card review css*/
+.review-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: white;
+  position: absolute;
+  z-index: 5000;
+  width: 100vw;
+  overflow-y: scroll;
+}
+
+@media (min-width: 1024px) {
+  .review-container {
+    flex-direction: row;
+  }
+}
+
+.preview-panel {
+  width: 100%;
+  max-width: 50%;
+  padding: 1rem;
+  background-color: #f9fafb;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.card-preview {
+  position: relative;
+  width: 100%;
+  max-width: 400px;
+  aspect-ratio: 1/1;
+  /* background-color: #f5e2c1; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.card-content {
+  position: relative;
+  width: 80%;
+}
+
+.card-front-inner {
+  position: relative;
+  background: black;
+  aspect-ratio: 1.8/1;
+  width: 100%;
+  border-radius: 2px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
+}
+
+.card-text {
+  position: absolute;
+  inset: 0;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo-box {
+  width: 48px;
+  height: 48px;
+  border: 1px solid white;
+  margin-bottom: 1rem;
+}
+
+.title {
+  font-size: 0.875rem;
+}
+
+.subtitle {
+  font-size: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.email {
+  font-size: 10px;
+  opacity: 0.7;
+}
+
+.bottom-image {
+  position: absolute;
+  bottom: -0.5rem;
+  right: -0.5rem;
+}
+
+.bottom-image-inner {
+  width: 96px;
+  height: 64px;
+  /* background-image: url("/placeholder.svg?height=100&width=100"); */
+  background-size: contain;
+  background-position: bottom right;
+  background-repeat: no-repeat;
+}
+
+.card-back {
+  background: black;
+  aspect-ratio: 1.8/1;
+  width: 100%;
+  border-radius: 2px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+}
+
+.back-text {
+  font-size: 0.875rem;
+}
+
+.card-toggle-buttons {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.toggle-btn {
+  padding: 0.5rem 1.5rem;
+  border-radius: 9999px;
+  background-color: transparent;
+  border: 1px solid #ccc;
+  cursor: pointer;
+}
+
+.toggle-btn.active {
+  background-color: #0ea5e9;
+  color: white;
+  border-color: transparent;
+}
+
+.review-panel {
+  width: 100%;
+  max-width: 50%;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.review-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  /* height: rem; */
+}
+
+.review-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.close-btn {
+  background: transparent;
+  border: none;
+  padding: 0.25rem;
+  border-radius: 9999px;
+  cursor: pointer;
+}
+
+.icon {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.instruction {
+  color: #4b5563;
+  margin-bottom: 1.5rem;
+}
+
+.review-checklist {
+  margin-bottom: 1.5rem;
+  list-style-type: disc;
+  padding-left: 1rem;
+  color: #374151;
+}
+
+.warning-box {
+  background-color: #fef2f2;
+  border: 1px solid #fecaca;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  display: flex;
+  /* align-items: center; */
+  gap: 0.5rem;
+}
+
+.warning-icon {
+  color: #ef4444;
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.review-actions {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.continue-btn {
+  width: 100%;
+  background-color: #38bdf8;
+  padding: 0.75rem;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.continue-btn:hover {
+  background-color: #0ea5e9;
+}
+
+.edit-btn {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #ccc;
+  background: transparent;
+  cursor: pointer;
+}
+.card-text img {
+  max-height: 300px;
+  max-width: 400px;
+}
+@media (max-width: 600px) {
+  .card-preview {
+    aspect-ratio: 0;
+  }
+  .preview-panel {
+    max-width: 100%;
+    /* height: 60vh; */
+    /* padding-top: 5rem; */
+  }
+  .review-panel {
+    max-width: 100%;
+  }
+  .card-text img {
+    max-width: 17rem;
   }
 }

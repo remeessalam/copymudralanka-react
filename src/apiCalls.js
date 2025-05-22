@@ -67,8 +67,8 @@ export const addTemplate = (formData) => {
   });
 };
 
-export const getTemplate = (template) => {
-  return apiInstance.get(`/templates/find/${template.fileId}`, {
+export const getTemplate = (fileId) => {
+  return apiInstance.get(`/templates/find/${fileId}`, {
     responseType: "blob",
   });
 };

@@ -19,6 +19,7 @@ import Cart from "./pages/Cart/Cart";
 import Checkout from "./pages/Checkout/Checkout";
 import { addUser } from "./apiCalls";
 import { NewEditor } from "./pages/VisitingCard/NewEditor";
+import DesingPage from "./components/DesingPage";
 
 const Home = lazy(() => import("./pages/Home/Home"));
 
@@ -74,8 +75,10 @@ function App() {
             <Route path="/contact" element={<ContactUs />} />
             <Route path="/cart" element={<Cart />} />
             <Route path="/checkout" element={<Checkout />} />
-            <Route path="/editvisiting-card" element={<NewEditor />} />
-            <Route path="/editsticker" element={<NewEditor />} />
+            <Route path="/editvisiting-card/:fileId" element={<NewEditor />} />
+            <Route path="/editsticker/:fileId" element={<NewEditor />} />
+            <Route path="/visiting-card-designs" element={<DesingPage />} />
+            <Route path="/sticker-designs" element={<DesingPage />} />
 
             {/* Service details pages */}
             <Route

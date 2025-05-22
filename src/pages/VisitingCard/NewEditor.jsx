@@ -10,7 +10,7 @@ import { Toolbar } from "polotno/toolbar/toolbar";
 import { ZoomButtons } from "polotno/toolbar/zoom-buttons";
 import { SidePanel, DEFAULT_SECTIONS } from "polotno/side-panel";
 import { Workspace } from "polotno/canvas/workspace";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import toast from "react-hot-toast";
 import "@blueprintjs/core/lib/css/blueprint.css";
 import { saveAs } from "file-saver";
@@ -27,6 +27,7 @@ import { removeBackgrounds } from "../../apiCalls";
 import { observer } from "mobx-react-lite";
 import { pxToUnitRounded } from "polotno/utils/unit";
 import imageCompression from "browser-image-compression";
+import DesignReview from "../../components/DesignReview";
 
 // Initialize the Polotno app
 const { store } = createDemoApp({
@@ -46,7 +47,7 @@ const customTemplatesSection = {
   Tab: (props) => (
     <div
       {...props}
-      style={{ display: "flex", flexDirection: "column", alignItems: "center" }}
+      style={{ display: "none", flexDirection: "column", alignItems: "center" }}
     >
       <FaFileAlt style={{ marginBottom: 8, fontSize: "30px", marginTop: 8 }} />{" "}
       {/* Increased icon size */}
@@ -179,8 +180,9 @@ export const NewEditor = () => {
   const [imageUrl, setImageUrl] = useState(null);
   const [openEditorOption, setOpenEditorOption] = useState(false);
   const [templateImage, setTemplateImage] = useState(null);
+  const [openConfirmation, setOpenConfirmation] = useState(false);
   const formData = new FormData();
-
+  const { fileId } = useParams();
   const filterTemplates = (templates) => {
     return templates.filter((template) => {
       const nameStartsWith =
@@ -189,54 +191,55 @@ export const NewEditor = () => {
     });
   };
 
-  const fetchTemplates = async () => {
-    try {
-      setLoading(true); // Set loading state
-      const response = await getTemplates();
-      console.log(response, "asdfasdfasdfs");
-      const filteredTemplates = filterTemplates(response.data.templates || []);
+  // const fetchTemplates = async () => {
+  //   try {
+  //     setLoading(true); // Set loading state
+  //     const response = await getTemplates();
+  //     console.log(response, "asdfasdfasdfs");
+  //     const filteredTemplates = filterTemplates(response.data.templates || []);
 
-      // Process templates without generating previews
-      // const templatesWithData = await Promise.all(
-      //   response.data.templates.map(async (template) => {
-      //     const templateResponse = await getTemplate(template);
-      //     const reader = new FileReader();
-      //     const templateBlob = new Blob([templateResponse.data], {
-      //       type: "application/json",
-      //     });
+  //     // Process templates without generating previews
+  //     // const templatesWithData = await Promise.all(
+  //     //   response.data.templates.map(async (template) => {
+  //     //     const templateResponse = await getTemplate(template);
+  //     //     const reader = new FileReader();
+  //     //     const templateBlob = new Blob([templateResponse.data], {
+  //     //       type: "application/json",
+  //     //     });
 
-      //     return new Promise((resolve) => {
-      //       reader.onload = (e) => {
-      //         try {
-      //           // Parse and assign template JSON
-      //           const templateData = JSON.parse(e.target.result);
-      //           template.jsonData = templateData; // Add parsed JSON to the template objec
-      //           resolve(template);
-      //         } catch (parseError) {
-      //           console.error("Failed to parse template:", parseError);
-      //           resolve(template); // Still resolve if there's an error
-      //         }
-      //       };
-      //       reader.readAsText(templateBlob);
-      //     });
-      //   })
-      // );
+  //     //     return new Promise((resolve) => {
+  //     //       reader.onload = (e) => {
+  //     //         try {
+  //     //           // Parse and assign template JSON
+  //     //           const templateData = JSON.parse(e.target.result);
+  //     //           template.jsonData = templateData; // Add parsed JSON to the template objec
+  //     //           resolve(template);
+  //     //         } catch (parseError) {
+  //     //           console.error("Failed to parse template:", parseError);
+  //     //           resolve(template); // Still resolve if there's an error
+  //     //         }
+  //     //       };
+  //     //       reader.readAsText(templateBlob);
+  //     //     });
+  //     //   })
+  //     // );
 
-      // Update state with templates
-      // setTemplates(templatesWithData || []);
-      setTemplates(filteredTemplates || []);
-      // console.log(templatesWithData);
-      setLoading(false); // Reset loading state
-    } catch (err) {
-      console.error("Error fetching templates:", err);
-      setLoading(false);
-      toast.error("Failed to load templates.");
-    }
-  };
+  //     // Update state with templates
+  //     // setTemplates(templatesWithData || []);
+  //     setTemplates(filteredTemplates || []);
+  //     // console.log(templatesWithData);
+  //     setLoading(false); // Reset loading state
+  //   } catch (err) {
+  //     console.error("Error fetching templates:", err);
+  //     setLoading(false);
+  //     toast.error("Failed to load templates.");
+  //   }
+  // };
 
   useEffect(() => {
     // Fetch templates on initial render
-    fetchTemplates();
+    // fetchTemplates();
+    handleTemplateClick(fileId);
   }, []);
 
   useEffect(() => {
@@ -256,7 +259,7 @@ export const NewEditor = () => {
   }, [openEditorOption]);
 
   const handleCustomButtonClick = () => {
-    location.pathname === "/editvisiting-card"
+    location.pathname.startsWith("/editvisiting-card")
       ? navigate("/visitingcard")
       : navigate("/sticker-printing");
   };
@@ -304,7 +307,7 @@ export const NewEditor = () => {
         await addTemplate(formData);
 
         toast.success("Template uploaded successfully!");
-        fetchTemplates(); // Refresh the templates list
+        // fetchTemplates(); // Refresh the templates list
       } catch (err) {
         console.error("Error processing template file:", err);
         toast.error("Failed to upload template.");
@@ -314,12 +317,12 @@ export const NewEditor = () => {
     reader.readAsText(file); // Read the file content
   };
 
-  const handleTemplateClick = async (template) => {
+  const handleTemplateClick = async (fileId) => {
     try {
-      console.log("Clicked Template:", template);
-      console.log("Attempting to fetch template with FileID:", template.fileId);
+      console.log("Clicked Template:", fileId);
+      console.log("Attempting to fetch template with FileID:", fileId);
       setLoading(true);
-      const response = await getTemplate(template);
+      const response = await getTemplate(fileId);
 
       console.log(response);
 
@@ -347,6 +350,7 @@ export const NewEditor = () => {
     } finally {
       setLoading(false);
       toggleCollapse();
+      // toggleCollapse();
     }
   };
   // if (sidePanel) {
@@ -359,7 +363,7 @@ export const NewEditor = () => {
     const panelContainer = document.querySelector(
       ".go3960841851.bp5-navbar.polotno-panel-container"
     );
-
+    // window.innerWidth <= 768 &&
     if (window.innerWidth <= 768 && panelContainer) {
       panelContainer.style.display = "none";
       panelContainer.style.overflowY = "hidden";
@@ -414,6 +418,14 @@ export const NewEditor = () => {
     document.getElementById("fileInput").click();
   };
   // Function to export high-resolution image (300 DPI)
+  const handleAddToCart = () => {
+    // if (templateimages) {
+    location.pathname.startsWith("/editvisiting-card")
+      ? addItemToCart()
+      : addItemToCartSticker();
+    // }
+    return;
+  };
   let templateimages;
   const exportHighResImage = async () => {
     try {
@@ -423,16 +435,18 @@ export const NewEditor = () => {
       const base64Image = await store.toDataURL({ pixelRatio: scalingFactor });
       setTemplateImage(base64Image);
       templateimages = base64Image;
-      console.log(base64Image, "asdflkasjdf");
+      console.log(location.pathname, "asdflkasjdf");
       // Trigger download
       // localStorage.setItem("selectedImage", base64Image);
-      if (templateimages) {
-        location.pathname === "/editvisiting-card"
-          ? addItemToCart()
-          : addItemToCartSticker();
-      }
+      // if (templateimages) {
+      //   location.pathname.startsWith("/editvisiting-card")
+      //     ? addItemToCart()
+      //     : addItemToCartSticker();
+      // }
       // handleCustomButtonClick();
-      return;
+      setLoading(false);
+
+      return true;
       // const link = document.createElement("a");
       // link.href = base64Image;
       // link.download = "high-res-image.png"; // Set the file name
@@ -475,7 +489,7 @@ export const NewEditor = () => {
   };
 
   const addItemToCart = async () => {
-    !loading && setLoading(true);
+    setLoading(true);
 
     const scalingFactor = 300 / 72; // Scaling factor for 300 DPI
     const base64Image = await store.toDataURL({ pixelRatio: scalingFactor });
@@ -494,8 +508,8 @@ export const NewEditor = () => {
     try {
       // const savedImage = localStorage.getItem("selectedImage");
       let file;
-      if (templateimages) {
-        file = base64ToFile(templateimages, "design.png");
+      if (templateImage) {
+        file = base64ToFile(templateImage, "design.png");
       }
       console.log(file, base64Image, "asdfasdfasdfasdf");
       const compressedFile = await compressImage(file);
@@ -534,6 +548,7 @@ export const NewEditor = () => {
     console.log(size, stikerquantity, "consoelasdfsdfesf");
     if (!size || !stikerquantity) {
       toast("Please select a size and quantity", { id: "error" });
+      setLoading(false);
       return;
     }
     // if (!imgUrl) {
@@ -547,8 +562,8 @@ export const NewEditor = () => {
       //   formData.append("imageUrl", templateimages);
       // } else {
       let file;
-      if (templateimages) {
-        file = base64ToFile(templateimages, "design.png");
+      if (templateImage) {
+        file = base64ToFile(templateImage, "design.png");
       }
       const compressedFile = await compressImage(file);
 
@@ -599,12 +614,15 @@ export const NewEditor = () => {
             sections={[
               {
                 ...customTemplatesSection,
-                Panel: () => (
-                  <customTemplatesSection.Panel
-                    templates={templates}
-                    onTemplateClick={handleTemplateClick}
-                  />
-                ),
+                Panel: () =>
+                  templates ? (
+                    <customTemplatesSection.Panel
+                      templates={templates}
+                      onTemplateClick={handleTemplateClick}
+                    />
+                  ) : (
+                    ""
+                  ),
               },
               ...DEFAULT_SECTIONS.filter(
                 (section) => section.name !== "templates"
@@ -632,7 +650,7 @@ export const NewEditor = () => {
         </div>
         {openEditorOption && (
           <div ref={modalRef} className="neweditor-buttons-container">
-            {location.pathname !== "/editvisiting-card" && (
+            {!location.pathname.startsWith("/editvisiting-card") && (
               <button
                 className="neweditor-remove-button"
                 onClick={removeBackground}
@@ -675,8 +693,12 @@ export const NewEditor = () => {
             </button>
             <button
               className="neweditor-close-button"
-              onClick={exportHighResImage}
-              // onClick={addItemToCart}
+              // onClick={exportHighResImage}
+              onClick={async () => {
+                const res = await exportHighResImage();
+                setOpenEditorOption(!openEditorOption);
+                res && setOpenConfirmation(true);
+              }}
             >
               {/* Export High-Res Image (300 DPI) */}
               Add Template To Cart
@@ -688,6 +710,14 @@ export const NewEditor = () => {
               X
             </button>
           </div>
+        )}
+        {openConfirmation && (
+          <DesignReview
+            exportHighResImage={handleAddToCart}
+            setOpenConfirmation={setOpenConfirmation}
+            imagestored={templateImage}
+            handleAddToCart={handleAddToCart}
+          />
         )}
       </PolotnoContainer>
       {imageUrl && (

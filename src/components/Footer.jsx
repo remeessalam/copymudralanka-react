@@ -1,7 +1,14 @@
 import React from "react";
-import { FaInstagram, FaWhatsapp, FaYoutube } from "react-icons/fa";
+import {
+  FaInstagram,
+  FaShippingFast,
+  FaWhatsapp,
+  FaYoutube,
+} from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { headerLinks, socialMediaLinks } from "../constant";
+import { RiSecurePaymentFill } from "react-icons/ri";
+import { MdHighQuality } from "react-icons/md";
 
 const Footer = () => {
   return (
@@ -79,6 +86,29 @@ const Footer = () => {
                     tailored to your needs, ensuring professional results and
                     customer satisfaction.
                   </p>
+                  <div className="social-block d-flex">
+                    <Link
+                      className="d-flex justify-content-center align-items-center"
+                      style={{ background: "black" }}
+                      // href=""
+                    >
+                      <FaShippingFast size={20} />
+                    </Link>
+                    <Link
+                      className="d-flex justify-content-center align-items-center"
+                      // href={""}
+                      style={{ background: "black" }}
+                    >
+                      <RiSecurePaymentFill size={20} />
+                    </Link>
+                    <Link
+                      className="d-flex justify-content-center align-items-center"
+                      // href={""}
+                      style={{ background: "black" }}
+                    >
+                      <MdHighQuality size={20} />
+                    </Link>
+                  </div>
                   <div className="social-block d-flex">
                     <a
                       className="d-flex justify-content-center align-items-center"

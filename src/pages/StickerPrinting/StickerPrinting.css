@@ -350,7 +350,7 @@ button {
 }
 
 .visitingcardlist {
-  list-style: none;
+  list-style: disc;
 }
 
 /**

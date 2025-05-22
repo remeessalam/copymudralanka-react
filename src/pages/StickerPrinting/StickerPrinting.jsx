@@ -9,7 +9,7 @@ import "swiper/css/free-mode";
 import "swiper/css/navigation";
 import "swiper/css/thumbs";
 import { FreeMode, Navigation, Thumbs } from "swiper/modules";
-import { relatedProducts } from "../../constant";
+import { relatedProducts, services } from "../../constant";
 import toast from "react-hot-toast";
 import { SpinnerContext } from "../../components/SpinnerContext";
 import {
@@ -21,6 +21,7 @@ import {
 import VisitingCardEditor from "../VisitingCard/VisitingCardEditor";
 import { convertBase64intoFile } from "../../utils/helper";
 import imageCompression from "browser-image-compression";
+import RecentlyViwed from "../../components/RecentlyViwed";
 
 const sizes = ["48x34", "72x34", "96x34", "120x34"];
 
@@ -73,11 +74,17 @@ const StickerPrinting = () => {
 
   const imgRef = useRef();
   const [data, setData] = useState({
-    size: "Select Size",
-    quantity: "",
+    size: localStorage.getItem("size")
+      ? localStorage.getItem("size")
+      : "Select Size",
+    quantity: localStorage.getItem("stikerquantity")
+      ? localStorage.getItem("stikerquantity")
+      : "",
     file: "",
     isInCart: false,
-    price: 0,
+    price: localStorage.getItem("stikerprice")
+      ? localStorage.getItem("stikerprice")
+      : 0,
   });
   const { setLoading } = useContext(SpinnerContext);
 
@@ -327,7 +334,7 @@ const StickerPrinting = () => {
     if (!quantity || !amount || !size) {
       return toast("Please select a size and quantity", { id: "size" });
     }
-    navigate("/editsticker");
+    navigate("/sticker-designs");
   };
   return (
     <div className="page-wrapper">
@@ -570,8 +577,20 @@ const StickerPrinting = () => {
                   //  to={"/editsticker"}
                   style={{ textDecoration: "none" }}
                 >
-                  <button className="secondary-btn w-auto mx-auto mt-3">
-                    Edit Sticker
+                  <button
+                    className="secondary-btn  mt-3"
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      paddingTop: ".3rem",
+                      width: "100% !important",
+                    }}
+                  >
+                    {/* Edit Sticker */}
+                    Browse designs
+                    <p style={{ fontSize: "10px", fontWeight: "400" }}>
+                      Choose one of over template or edit{" "}
+                    </p>
                   </button>
                 </div>
               )
@@ -665,19 +684,7 @@ const StickerPrinting = () => {
           </div>
         </div>
         <br />
-        {/* <div className="section-threeContainer">
-          <h3>Related products</h3>
-          <div className="relatedproduct-container">
-            {relatedProducts.map((obj) => (
-              <div key={obj.id} className="relatedproducd-one">
-                <img src={obj.img} alt="related product" />
-                <h4>{obj.title}</h4>
-                <p>{obj.text}</p>
-              </div>
-            ))}
-            
-          </div>
-        </div> */}
+        <RecentlyViwed category="Sticker Printing" />
       </div>
       <Footer />
     </div>

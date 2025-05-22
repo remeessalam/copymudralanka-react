@@ -13,6 +13,7 @@ import { relatedProducts, sendEmailLink } from "../../constant";
 import toast from "react-hot-toast";
 import { SpinnerContext } from "../../components/SpinnerContext";
 import { addToCart, getCartItemById, updateCartItem } from "../../apiCalls";
+import RecentlyViwed from "../../components/RecentlyViwed";
 
 const sizes = ["3.8 x 7.8", "4 x 5.5", "5.5 x 8.5", "8.5 x 11"];
 const images = [
@@ -511,18 +512,7 @@ const BillBook = () => {
           </div>
         </div>
         <br />
-        {/* <div class="section-threeContainer">
-          <h3>Related products</h3>
-          <div class="relatedproduct-container">
-            {relatedProducts.map((obj) => (
-              <div key={obj.id} class="relatedproducd-one">
-                <img src={obj.img} alt="related product" />
-                <h4>{obj.title}</h4>
-                <p>{obj.text}</p>
-              </div>
-            ))}
-          </div>
-        </div> */}
+        <RecentlyViwed category="Billbook" />
       </div>
       <Footer />
     </div>

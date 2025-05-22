@@ -18,6 +18,7 @@ import { convertBase64intoFile } from "../../utils/helper";
 import imageCompression from "browser-image-compression";
 import { IoMdCloseCircle } from "react-icons/io";
 import { FaTrashAlt } from "react-icons/fa";
+import RecentlyViwed from "../../components/RecentlyViwed";
 // import { useImageContext } from "../../components/imageContext";
 const quantityOptions = [
   {
@@ -71,8 +72,10 @@ const VisitingCard = () => {
 
   const imgRef = useRef();
   const [data, setData] = useState({
-    quantity: "",
-    price: "",
+    quantity: localStorage.getItem("quantity")
+      ? localStorage.getItem("quantity")
+      : "",
+    price: localStorage.getItem("amount") ? localStorage.getItem("amount") : "",
     isInCart: false,
   });
   const { setLoading } = useContext(SpinnerContext);
@@ -293,7 +296,8 @@ const VisitingCard = () => {
       toast("Please select a  quantity", { id: "quantity" });
       return;
     }
-    navigate("/editvisiting-card");
+    navigate("/visiting-card-designs");
+    // navigate("/editvisiting-card");
   };
 
   return (
@@ -490,8 +494,20 @@ const VisitingCard = () => {
                 // to={"/editvisiting-card"}
                 style={{ textDecoration: "none" }}
               >
-                <button className="secondary-btn w-auto mx-auto mt-3">
-                  Edit Visiting Card
+                <button
+                  className="secondary-btn   mt-3"
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    paddingTop: ".3rem",
+                    width: "100% !important",
+                  }}
+                >
+                  {/* Edit Visiting Card */}
+                  Browse designs
+                  <p style={{ fontSize: "10px", fontWeight: "400" }}>
+                    Choose one of over template or edit{" "}
+                  </p>
                 </button>
               </div>
             )}
@@ -577,6 +593,8 @@ const VisitingCard = () => {
           </div>
         </div>
         <br />
+        <RecentlyViwed category="Visiting Card" />
+
         {/* <div class="section-threeContainer">
           <h3>Related products</h3>
           <div class="relatedproduct-container">

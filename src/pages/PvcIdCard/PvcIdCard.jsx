@@ -18,6 +18,7 @@ import {
   getCartItemById,
   updateCartItem,
 } from "../../apiCalls";
+import RecentlyViwed from "../../components/RecentlyViwed";
 
 const quantities = [
   { quantity: "1 (170.00 / Unit)", price: 170.0 },
@@ -453,18 +454,7 @@ const PvcIdCard = () => {
           </div>
         </div>
         <br />
-        {/* <div className="section-threeContainer">
-          <h3>Related products</h3>
-          <div className="relatedproduct-container">
-            {relatedProducts.map((obj) => (
-              <div key={obj.id} className="relatedproducd-one">
-                <img src={obj.img} alt="related product" />
-                <h4>{obj.title}</h4>
-                <p>{obj.text}</p>
-              </div>
-            ))}
-          </div>
-        </div> */}
+        <RecentlyViwed category="PVC ID Card" />
       </div>
       <Footer />
     </div>

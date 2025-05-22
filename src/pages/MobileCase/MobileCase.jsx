@@ -13,6 +13,7 @@ import { relatedProducts, sendEmailLink } from "../../constant";
 import toast from "react-hot-toast";
 import { SpinnerContext } from "../../components/SpinnerContext";
 import { addToCart, getCartItemById, updateCartItem } from "../../apiCalls";
+import RecentlyViwed from "../../components/RecentlyViwed";
 
 const brand = ["Apple", "Samsung", "OnePlus", "Nothing"];
 const images = [
@@ -460,19 +461,7 @@ const MobileCase = () => {
           </div>
         </div>
         <br />
-        {/* <div className="section-threeContainer">
-          <h3>Related products</h3>
-          <div className="relatedproduct-container">
-            {relatedProducts.map((obj) => (
-              <div key={obj.id} className="relatedproducd-one">
-                <img src={obj.img} alt="related product" />
-                <h4>{obj.title}</h4>
-                <p>{obj.text}</p>
-              </div>
-            ))}
-            
-          </div>
-        </div> */}
+        <RecentlyViwed category="Mobile Case Printing" />
       </div>
       <Footer />
     </div>
