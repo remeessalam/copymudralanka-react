@@ -3,6 +3,7 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { FaInstagram, FaWhatsapp, FaYoutube } from "react-icons/fa";
 import { socialMediaLinks } from "../constant";
+import { Link } from "react-router-dom";
 const LocationMap = lazy(() => import("../components/LocationMap"));
 
 const ContactUs = () => {
@@ -14,7 +15,7 @@ const ContactUs = () => {
           <h2 class="inner-banner__title">Contact Us</h2>
           <ul class="thm-breadcrumb">
             <li class="thm-breadcrumb__item">
-              <a href="#">Home</a>
+              <Link to="/">Home</Link>
             </li>
             <li class="thm-breadcrumb__item">
               <span>Contact Us</span>
@@ -48,13 +49,22 @@ const ContactUs = () => {
                   India
                 </p>
                 <div class="social-block d-flex contact_us_social_media_links">
-                  <a className="d-flex justify-content-center align-items-center" href={socialMediaLinks.whatsapp}>
+                  <a
+                    className="d-flex justify-content-center align-items-center"
+                    href={socialMediaLinks.whatsapp}
+                  >
                     <FaWhatsapp size={18} />
                   </a>
-                  <a className="d-flex justify-content-center align-items-center" href={socialMediaLinks.youtube}>
+                  <a
+                    className="d-flex justify-content-center align-items-center"
+                    href={socialMediaLinks.youtube}
+                  >
                     <FaYoutube size={18} />
                   </a>
-                  <a className="d-flex justify-content-center align-items-center" href={socialMediaLinks.instagram}>
+                  <a
+                    className="d-flex justify-content-center align-items-center"
+                    href={socialMediaLinks.instagram}
+                  >
                     <FaInstagram size={18} />
                   </a>
                 </div>

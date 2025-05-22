@@ -5,6 +5,7 @@ import LogosSlider from "../components/LogosSlider";
 import Testimonials from "../components/Testimonials";
 import MeetTheTeam from "../components/MeetTheTeam";
 import FAQs from "../components/FAQs";
+import { Link } from "react-router-dom";
 
 const AboutUs = () => {
   return (
@@ -15,7 +16,7 @@ const AboutUs = () => {
           <h2 class="inner-banner__title">About Us</h2>
           <ul class="thm-breadcrumb">
             <li class="thm-breadcrumb__item">
-              <a href="#">Home</a>
+              <Link to="/">Home</Link>
             </li>
             <li class="thm-breadcrumb__item">
               <span>About Us</span>

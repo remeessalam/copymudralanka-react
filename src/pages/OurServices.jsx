@@ -14,7 +14,7 @@ const OurServices = () => {
           <h2 class="inner-banner__title">All Categories</h2>
           <ul class="thm-breadcrumb">
             <li class="thm-breadcrumb__item">
-              <a href="#">Home</a>
+              <Link to="/">Home</Link>
             </li>
             <li class="thm-breadcrumb__item">
               <span>All Categories</span>
