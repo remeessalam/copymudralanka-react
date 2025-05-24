@@ -375,3 +375,132 @@ html {
     max-width: 17rem;
   }
 }
+
+.mudralanka-search-container {
+  position: relative;
+  flex: 1;
+  max-width: 400px;
+  margin: 0.5rem auto;
+}
+
+.mudralanka-mobile-search-container {
+  position: relative;
+  width: 100%;
+}
+
+.mudralanka-search-form {
+  position: relative;
+  width: 100%;
+}
+
+.mudralanka-search-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  background: #fff;
+  border: 2px solid #e0e0e0;
+  border-radius: 25px;
+  padding: 0;
+  transition: all 0.3s ease;
+}
+
+.mudralanka-search-input-wrapper:focus-within {
+  border-color: none;
+  /* border-color: #007bff; */
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+}
+
+.mudralanka-search-input {
+  flex: 1;
+  border: none;
+  outline: none;
+  padding: 12px 20px;
+  font-size: 14px;
+  background: transparent;
+  border-radius: 25px;
+}
+/* Remove blue outline on focus */
+.mudralanka-search-input:focus,
+.mudralanka-search-input:focus-visible {
+  outline: none;
+  box-shadow: none;
+}
+
+.mudralanka-search-input::placeholder {
+  color: #999;
+}
+
+.mudralanka-search-btn {
+  background: #17354f;
+  border: none;
+  color: white;
+  padding: 12px 16px;
+  border-radius: 0 25px 25px 0;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mudralanka-search-btn:hover {
+  background: #0056b3;
+}
+
+.mudralanka-search-results {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: white;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  max-height: 300px;
+  overflow-y: auto;
+  margin-top: 5px;
+}
+
+.mudralanka-search-result-item {
+  display: flex;
+  align-items: center;
+  padding: 12px 16px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.mudralanka-search-result-item:last-child {
+  border-bottom: none;
+}
+
+.mudralanka-search-result-item:hover {
+  background-color: #f8f9fa;
+}
+
+.mudralanka-search-result-img {
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+  border-radius: 6px;
+  margin-right: 12px;
+}
+
+.mudralanka-search-result-title {
+  font-size: 14px;
+  color: #333;
+  font-weight: 500;
+}
+
+/* Responsive adjustments */
+@media (max-width: 991px) {
+  .mudralanka-search-container {
+    display: none !important;
+  }
+}
+@media (max-width: 591px) {
+  .mudralanka-search-input {
+    padding: 0px 0px 0px 7px;
+  }
+}
