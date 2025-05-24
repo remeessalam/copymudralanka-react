@@ -20,6 +20,7 @@ import Checkout from "./pages/Checkout/Checkout";
 import { addUser } from "./apiCalls";
 import { NewEditor } from "./pages/VisitingCard/NewEditor";
 import DesingPage from "./components/DesingPage";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
 
 const Home = lazy(() => import("./pages/Home/Home"));
 
@@ -80,6 +81,7 @@ function App() {
             <Route path="/editor" element={<NewEditor />} />
             <Route path="/visiting-card-designs" element={<DesingPage />} />
             <Route path="/sticker-designs" element={<DesingPage />} />
+            <Route path="/privacy-policy" element={<PrivacyPolicy />} />
 
             {/* Service details pages */}
             <Route
