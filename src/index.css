@@ -116,6 +116,7 @@ html {
 /* header drawer styles */
 .EZDrawer__container {
   z-index: 9999 !important;
+  width: 303px !important;
 }
 
 .aboutsectionsplitedimage {
