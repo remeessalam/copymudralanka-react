@@ -7,6 +7,7 @@ import "aos/dist/aos.css";
 import AboutUs from "./pages/AboutUs";
 import OurServices from "./pages/OurServices";
 import ContactUs from "./pages/ContactUs";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
 import { LoadingSpinner } from "./components/LoadingSpinner";
 import ScrollToTopOnPageChange from "./components/ScrollToTopOnPageChange";
 import StickerPrinting from "./pages/StickerPrinting/StickerPrinting";
@@ -20,7 +21,6 @@ import Checkout from "./pages/Checkout/Checkout";
 import { addUser } from "./apiCalls";
 import { NewEditor } from "./pages/VisitingCard/NewEditor";
 import DesingPage from "./components/DesingPage";
-import PrivacyPolicy from "./pages/PrivacyPolicy";
 
 const Home = lazy(() => import("./pages/Home/Home"));
 
