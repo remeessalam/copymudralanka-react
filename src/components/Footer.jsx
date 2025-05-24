@@ -26,8 +26,8 @@ const Footer = () => {
                   />
                 </Link>
                 <div className="menu-link">
-                  <Link to="#">Terms of use</Link>
-                  <span className="sep">.</span>
+                  {/* <Link to="#">Terms of use</Link>
+                  <span className="sep">.</span> */}
                   <Link to="/privacy-policy">Privacy policy</Link>
                 </div>
               </div>
