@@ -1,5 +1,3 @@
-import React from "react";
-
 const MeetTheTeam = () => {
   return (
     <section className="team-one sec-pad">

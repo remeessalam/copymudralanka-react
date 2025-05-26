@@ -1,4 +1,4 @@
-import React, { lazy } from "react";
+import { lazy } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { FaInstagram, FaWhatsapp, FaYoutube } from "react-icons/fa";

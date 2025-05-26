@@ -1,5 +1,3 @@
-import React from "react";
-
 const LocationMap = () => {
   return (
     <div className="google-map" id="home-google-map">

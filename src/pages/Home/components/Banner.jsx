@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import sliderImg1 from "../../../assets/images/slider/slider-1-1.jpg";
 import sliderImg2 from "../../../assets/images/slider/slider-1-2.jpg";
 import { Swiper, SwiperSlide } from "swiper/react";

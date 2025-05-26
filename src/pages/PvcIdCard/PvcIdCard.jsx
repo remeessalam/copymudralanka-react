@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import "../StickerPrinting/StickerPrinting.css";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import Header from "../../components/Header";
@@ -9,15 +9,9 @@ import "swiper/css/free-mode";
 import "swiper/css/navigation";
 import "swiper/css/thumbs";
 import { FreeMode, Navigation, Thumbs } from "swiper/modules";
-import { relatedProducts, sendEmailLink } from "../../constant";
 import toast from "react-hot-toast";
 import { SpinnerContext } from "../../components/SpinnerContext";
-import {
-  addToCart,
-  convertUrlIntoFile,
-  getCartItemById,
-  updateCartItem,
-} from "../../apiCalls";
+import { addToCart, getCartItemById, updateCartItem } from "../../apiCalls";
 import RecentlyViwed from "../../components/RecentlyViwed";
 
 const quantities = [
@@ -462,46 +456,3 @@ const PvcIdCard = () => {
 };
 
 export default PvcIdCard;
-
-{
-  /* <div className="relatedproducd-one">
-  <img
-    src="/images/service-stickerPrinting/related-productone.png"
-    alt="related product"
-  />
-  <h4>Sheet Stickers</h4>
-  <p>24 starting at ₹160.00</p>
-</div>
-<div className="relatedproducd-one">
-  <img
-    src="/images/service-stickerPrinting/related-productone.png"
-    alt="related product"
-  />
-  <h4>Sheet Stickers</h4>
-  <p>24 starting at ₹160.00</p>
-</div>
-<div className="relatedproducd-one">
-  <img
-    src="/images/service-stickerPrinting/related-productone.png"
-    alt="related product"
-  />
-  <h4>Sheet Stickers</h4>
-  <p>24 starting at ₹160.00</p>
-</div>
-<div className="relatedproducd-one">
-  <img
-    src="/images/service-stickerPrinting/related-productone.png"
-    alt="related product"
-  />
-  <h4>Sheet Stickers</h4>
-  <p>24 starting at ₹160.00</p>
-</div>
-<div className="relatedproducd-one">
-  <img
-    src="/images/service-stickerPrinting/related-productone.png"
-    alt="related product"
-  />
-  <h4>Sheet Stickers</h4>
-  <p>24 starting at ₹160.00</p>
-</div> */
-}

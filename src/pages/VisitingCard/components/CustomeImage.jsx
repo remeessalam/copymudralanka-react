@@ -6,7 +6,6 @@ import { SectionTab } from "polotno/side-panel";
 import MdPhotoLibrary from "@meronex/icons/md/MdPhotoLibrary";
 import { getImageSize } from "polotno/utils/image";
 import "@blueprintjs/core/lib/css/blueprint.css";
-// import { useImageContext } from "../../../components/imageContext";
 
 export const PhotosPanel = observer(({ store }) => {
   const [images, setImages] = React.useState([]);

@@ -1,12 +1,6 @@
-import React, { useState, useRef, useEffect } from "react";
-import {
-  FaInstagram,
-  FaPhoneSquareAlt,
-  FaWhatsapp,
-  FaYoutube,
-  FaSearch,
-} from "react-icons/fa";
-import { IoClose, IoMail } from "react-icons/io5";
+import { useState, useRef, useEffect } from "react";
+import { FaInstagram, FaWhatsapp, FaYoutube, FaSearch } from "react-icons/fa";
+import { IoClose } from "react-icons/io5";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { headerLinks, socialMediaLinks, services } from "../constant";
 import { Link, useLocation, useNavigate } from "react-router-dom";

@@ -1,4 +1,3 @@
-import React from "react";
 import { PiCaretUpBold } from "react-icons/pi";
 
 const ScrollToTopButton = () => {

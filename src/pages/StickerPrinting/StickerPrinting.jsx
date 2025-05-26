@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import "./StickerPrinting.css";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import Header from "../../components/Header";
@@ -9,7 +9,6 @@ import "swiper/css/free-mode";
 import "swiper/css/navigation";
 import "swiper/css/thumbs";
 import { FreeMode, Navigation, Thumbs } from "swiper/modules";
-import { relatedProducts, services } from "../../constant";
 import toast from "react-hot-toast";
 import { SpinnerContext } from "../../components/SpinnerContext";
 import {
@@ -18,7 +17,6 @@ import {
   removeBackgrounds,
   updateCartItem,
 } from "../../apiCalls";
-import VisitingCardEditor from "../VisitingCard/VisitingCardEditor";
 import { convertBase64intoFile } from "../../utils/helper";
 import imageCompression from "browser-image-compression";
 import RecentlyViwed from "../../components/RecentlyViwed";

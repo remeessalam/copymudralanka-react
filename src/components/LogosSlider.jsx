@@ -1,4 +1,3 @@
-import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 
 // Import Swiper styles
@@ -48,7 +47,7 @@ const LogosSlider = () => {
             {images.concat(images).map((img) => (
               <SwiperSlide key={img}>
                 <div className="item">
-                  <img src={img} alt='logo'/>
+                  <img src={img} alt="logo" />
                 </div>
               </SwiperSlide>
             ))}

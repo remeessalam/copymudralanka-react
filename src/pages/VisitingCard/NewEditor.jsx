@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
-import axios from "axios";
 import {
   createDemoApp,
   PolotnoContainer,
@@ -15,12 +14,7 @@ import toast from "react-hot-toast";
 import "@blueprintjs/core/lib/css/blueprint.css";
 import { saveAs } from "file-saver";
 import { SpinnerContext } from "../../components/SpinnerContext";
-import {
-  addTemplate,
-  getTemplates,
-  getTemplate,
-  addToCart,
-} from "../../apiCalls";
+import { addTemplate, getTemplate, addToCart } from "../../apiCalls";
 import "./components/newEditor.css";
 import { FaFileAlt } from "react-icons/fa";
 import { removeBackgrounds } from "../../apiCalls";
